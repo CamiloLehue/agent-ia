@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+
+
+@theme {
+
+
+  --color-bgp: #0d0d0d;
+  --color-bgs: #1a1a1a;
+  --color-bgt: #272a30;
+  --color-bgsecondary: #18181b;
+
+  --color-bgb: #091217;
+  --color-bgbp: #0c1f2a;
+  --color-gray: #18181b;
+  --color-gray: #71717b;
+  --color-blue: #1f2ab5;
+  --color-sky: oklch(50% 0.134 242.749);
+  --color-primary: #e9ff47;
+
+  --color-secondary: #30b0ff;
+  --color-white: #e6e6f5;
+  --color-success: #68b353;
+  --color-warning: #ffd700;
+  --color-danger: #ff1010;
+}
+
+@layer base {
+
+  body {
+    @apply relative bg-[#171b3d] h-full w-full text-[#cccce0];
+  }
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+
+  h4 {
+    @apply text-base;
+  }
+
+  h5 {
+    @apply text-sm;
+  }
+
+  h6 {
+    @apply text-xs;
+  }
+
+  p {
+    @apply text-sm;
+  }
+
+  a {
+    @apply text-[#c41a01] font-bold;
+  }
+
+  button {
+    @apply text-[#d7d5d5] transition-all duration-200 ease-in cursor-pointer;
+  }
+
+  input {
+    @apply transition-all duration-200 ease-in cursor-pointer;
+  }
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* azeret-mono-latin-wght-normal */
+@font-face {
+  font-family: 'Azeret Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/azeret-mono:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* iosevka-latin-400-normal */
+@font-face {
+  font-family: 'Iosevka';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/iosevka@latest/latin-400-normal.woff2) format('woff2'), url(https://cdn.jsdelivr.net/fontsource/fonts/iosevka@latest/latin-400-normal.woff) format('woff');
+}
+
+/* pitagon-sans-mono-latin-400-normal */
+@font-face {
+  font-family: 'Pitagon Sans Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/pitagon-sans-mono@latest/latin-400-normal.woff2) format('woff2'), url(https://cdn.jsdelivr.net/fontsource/fonts/pitagon-sans-mono@latest/latin-400-normal.woff) format('woff');
+}
+
+/* geist-sans-latin-400-normal */
+@font-face {
+  font-family: 'Geist Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-400-normal.woff2) format('woff2'), url(https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-400-normal.woff) format('woff');
+}
+
+/* libre-franklin-latin-wght-normal */
+@font-face {
+  font-family: 'Libre Franklin Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/libre-franklin:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* figtree-latin-wght-normal */
+@font-face {
+  font-family: 'Figtree Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/figtree:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* titillium-web-latin-400-normal */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/titillium-web@latest/latin-400-normal.woff2) format('woff2'), url(https://cdn.jsdelivr.net/fontsource/fonts/titillium-web@latest/latin-400-normal.woff) format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* noto-sans-bengali-latin-wght-normal */
+@font-face {
+  font-family: 'Noto Sans Bengali Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-bengali:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* lexend-deca-latin-wght-normal */
+@font-face {
+  font-family: 'Lexend Deca Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/lexend-deca:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html,
+body {
+  min-height: 100vh;
+  height: 100%;
+  /* font-family: 'Azeret Mono Variable', monospace; */
+  /* font-family: 'Iosevka', monospace; */
+  /* font-family: 'Pitagon Sans Mono', monospace; */
+  font-family: 'Geist Sans', sans-serif;
+  font-family: 'Libre Franklin Variable', sans-serif;
+  /* font-family: 'Figtree Variable', sans-serif; */
+  /* font-family: 'Titillium Web', sans-serif; */
+  /* font-family: 'Noto Sans Bengali Variable', sans-serif; */
+  /* font-family: 'Lexend Deca Variable', sans-serif; */
+
+
+}
