@@ -1,35 +1,18 @@
-import { useEffect, useRef } from 'react'
-import './App.css'
-import gsap from "gsap";
+import ChatPage from './features/chat/pages/ChatPage';
+
 function App() {
-  const boxRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (boxRef.current) {
-      gsap.fromTo(
-        boxRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1 }
-      );
-    }
-  }, []);
-
   return (
     <>
-      <h1>Vite + React</h1>
-      <div
-        ref={boxRef}
-        style={{
-          width: "200px",
-          height: "200px",
-          backgroundColor: "#4ade80",
-          margin: "2rem auto",
-        }}
-      >
-        Animado con GSAP
+      <div className="container mx-auto p-4 h-full w-full flex flex-col justify-center items-center ">
+        <section className=" h-full w-full">
+          <ChatPage />
+        </section>
       </div>
     </>
   )
 }
 
 export default App
+
+
+

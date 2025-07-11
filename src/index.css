@@ -5,30 +5,22 @@
 @theme {
 
 
-  --color-bgp: #0d0d0d;
-  --color-bgs: #1a1a1a;
-  --color-bgt: #272a30;
-  --color-bgsecondary: #18181b;
+  --color-background: #0a0a0a;
+  --color-primary: #cdd9ea;
+  --color-secondary: #1f2326;
+  --color-accent: #d74322;
 
-  --color-bgb: #091217;
-  --color-bgbp: #0c1f2a;
-  --color-gray: #18181b;
-  --color-gray: #71717b;
-  --color-blue: #1f2ab5;
-  --color-sky: oklch(50% 0.134 242.749);
-  --color-primary: #e9ff47;
-
-  --color-secondary: #30b0ff;
-  --color-white: #e6e6f5;
+  --color-white: #f8faf3;
+  --color-black: #0e0906;
   --color-success: #68b353;
   --color-warning: #ffd700;
-  --color-danger: #ff1010;
+  --color-danger: #ef1b26;
 }
 
 @layer base {
 
   body {
-    @apply relative bg-[#171b3d] h-full w-full text-[#cccce0];
+    @apply relative h-full w-full;
   }
 
   h1 {
@@ -187,6 +179,6 @@ body {
   /* font-family: 'Titillium Web', sans-serif; */
   /* font-family: 'Noto Sans Bengali Variable', sans-serif; */
   /* font-family: 'Lexend Deca Variable', sans-serif; */
-
+  background: radial-gradient(farthest-side at 51% 21%, rgb(64, 74, 80) 0%, #0a0a0a 100%);
 
 }
