@@ -19,7 +19,7 @@ export const useChat = () => {
             content: messageData.prompt,
             role: 'user',
             timestamp: new Date(),
-            selectedItems: messageData.selectedItems
+            selectedItem: messageData.selectedItem
         };
 
         setMessages(prev => [...prev, userMessage]);

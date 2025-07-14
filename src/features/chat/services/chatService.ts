@@ -44,8 +44,8 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         },
         body: JSON.stringify({
             prompt: messageData.prompt,
-            selectedItems: messageData.selectedItems,
-            timestamp: new Date().toISOString()
+            typeSearch: messageData.selectedItem || 1,
+            // timestamp: new Date().toISOString()
         })
     });
 

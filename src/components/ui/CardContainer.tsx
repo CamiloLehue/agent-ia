@@ -8,52 +8,39 @@ interface CardItem {
 
 interface CardContainerProps {
   items: CardItem[];
-  onSelectionChange?: (selectedItems: (string | number)[]) => void;
-  selectedItems?: (string | number)[];
+  onSelectionChange?: (selectedItem: string | number | null) => void;
+  selectedItem?: string | number | null;
 }
 
-function CardContainer({ items, onSelectionChange, selectedItems: externalSelectedItems }: CardContainerProps) {
-  const [internalSelectedItems, setInternalSelectedItems] = useState<(string | number)[]>([]);
+function CardContainer({ items, onSelectionChange, selectedItem: externalSelectedItem }: CardContainerProps) {
+  const [internalSelectedItem, setInternalSelectedItem] = useState<string | number | null>(null);
 
-  // Usar los items seleccionados externos si se proporcionan, de lo contrario usar el estado interno
-  const selectedItems = externalSelectedItems || internalSelectedItems;
+  // Usar el item seleccionado externo si se proporciona, de lo contrario usar el estado interno
+  const selectedItem = externalSelectedItem !== undefined ? externalSelectedItem : internalSelectedItem;
 
   const handleSelect = (id: string | number) => {
     // Si estamos usando el estado externo, solo llamamos al callback
-    if (externalSelectedItems) {
-      // Obtenemos solo los IDs de los items que pertenecen a este contenedor
-      const containerItemIds = items.map(item => item.id);
-
-      // Filtramos las selecciones actuales para este contenedor específico
-      const currentContainerSelections = externalSelectedItems.filter(itemId =>
-        containerItemIds.includes(itemId)
-      );
-
-      // Verificamos si el ítem está seleccionado
-      const isSelected = currentContainerSelections.includes(id);
-
-      // Actualizamos las selecciones para este contenedor
-      const newContainerSelections = isSelected
-        ? currentContainerSelections.filter(item => item !== id)
-        : [...currentContainerSelections, id];
-
-      // Llamamos al callback con las nuevas selecciones de este contenedor
-      onSelectionChange?.(newContainerSelections);
+    if (externalSelectedItem !== undefined) {
+      // Si el item ya está seleccionado, lo deseleccionamos
+      if (selectedItem === id) {
+        onSelectionChange?.(null);
+      } else {
+        // Si no está seleccionado, lo seleccionamos (deseleccionando cualquier otro)
+        onSelectionChange?.(id);
+      }
     }
     // Si no hay estado externo, usamos el estado interno
     else {
-      setInternalSelectedItems(prev => {
-        // Si el ítem ya está seleccionado, lo quitamos del array
-        if (prev.includes(id)) {
-          const newSelected = prev.filter(item => item !== id);
-          onSelectionChange?.(newSelected);
-          return newSelected;
+      setInternalSelectedItem(prev => {
+        // Si el ítem ya está seleccionado, lo deseleccionamos
+        if (prev === id) {
+          onSelectionChange?.(null);
+          return null;
         }
-        // Si no está seleccionado, lo añadimos al array
+        // Si no está seleccionado, lo seleccionamos
         else {
-          const newSelected = [...prev, id];
-          onSelectionChange?.(newSelected);
-          return newSelected;
+          onSelectionChange?.(id);
+          return id;
         }
       });
     }
@@ -65,7 +52,7 @@ function CardContainer({ items, onSelectionChange, selectedItems: externalSelect
         <Card
           key={item.id}
           id={item.id}
-          isSelected={selectedItems.includes(item.id)}
+          isSelected={selectedItem === item.id}
           onSelect={handleSelect}
         >
           {item.content}

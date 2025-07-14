@@ -8,7 +8,7 @@ export interface ChatMessage {
     content: string
     role: 'user' | 'assistant'
     timestamp: Date
-    selectedItems?: {id: number, name: string}[]
+    selectedItem?: {id: number, name: string}
 }
 
 export interface ChatResponse {
@@ -19,5 +19,5 @@ export interface ChatResponse {
 
 export interface SendMessageRequest {
     prompt: string
-    selectedItems: {id: number, name: string}[]
+    selectedItem?: {id: number, name: string}
 }

@@ -4,8 +4,8 @@ import ChatResults from "../components/ChatResults"
 import { useChat } from "../hooks/useChat"
 
 interface ChatPageProps {
-    isSelected: {id: number, name: string}[]
-    removeSelectedItem: (itemId: number) => void
+    isSelected?: {id: number, name: string}
+    removeSelectedItem: () => void
 }
 
 function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {

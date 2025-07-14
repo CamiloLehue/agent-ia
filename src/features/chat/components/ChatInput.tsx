@@ -7,8 +7,8 @@ import type { SendMessageRequest } from '../types/chatTypes';
 interface ChatInputProps {
     setResults: (results: boolean) => void
     results: boolean
-    isSelected: {id: number, name: string}[]
-    removeSelectedItem: (itemId: number) => void
+    isSelected?: {id: number, name: string}
+    removeSelectedItem: () => void
     onSendMessage: (messageData: SendMessageRequest) => void
     loading?: boolean
 }
@@ -34,7 +34,7 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
 
         const messageData: SendMessageRequest = {
             prompt: inputValue.trim(),
-            selectedItems: isSelected || []
+            selectedItem: isSelected || undefined
         };
 
         onSendMessage(messageData);
@@ -67,23 +67,20 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                         </h5>
                     </div>
 
-                    {isSelected && isSelected.length > 0 && (
+                    {isSelected && (
                         <div className='flex flex-wrap gap-1'>
-                            {isSelected.map((item) => (
-                                <div 
-                                    key={item.id}
-                                    className='bg-background px-2 flex justify-center items-center gap-1 rounded-2xl py-0.5 border border-primary/20 shadow shadow-black cursor-pointer hover:bg-black/50 transition-colors'
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        removeSelectedItem(item.id);
-                                    }}
-                                >
-                                    <LuSparkles size={13} className='text-accent' />
-                                    <h5 className='text-primary/70'>
-                                        {item.name} <span className='text-xs opacity-50'>#{item.id}</span>
-                                    </h5>
-                                </div>
-                            ))}
+                            <div 
+                                className='bg-background px-2 flex justify-center items-center gap-1 rounded-2xl py-0.5 border border-primary/20 shadow shadow-black cursor-pointer hover:bg-black/50 transition-colors'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeSelectedItem();
+                                }}
+                            >
+                                <LuSparkles size={13} className='text-accent' />
+                                <h5 className='text-primary/70'>
+                                    {isSelected.name} <span className='text-xs opacity-50'>#{isSelected.id}</span>
+                                </h5>
+                            </div>
                         </div>
                     )}
                 </div>

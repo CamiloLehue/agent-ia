@@ -4,39 +4,28 @@ import ChatPage from './features/chat/pages/ChatPage';
 
 function App() {
 
-  const [isSelectedData, setIsSelectedData] = useState<{ id: number, name: string }[]>([]);
+  const [isSelectedData, setIsSelectedData] = useState<{ id: number, name: string } | undefined>(undefined);
 
-  const removeSelectedItem = (itemId: number) => {
-    setIsSelectedData(prev => prev.filter(item => item.id !== itemId));
-    setSelectedItems(prev => prev.filter(id => id !== itemId));
+  const removeSelectedItem = () => {
+    setIsSelectedData(undefined);
+    setSelectedItem(null);
   };
-  const [selectedItems, setSelectedItems] = useState<(string | number)[]>([]);
+  const [selectedItem, setSelectedItem] = useState<string | number | null>(null);
 
-  // Función para actualizar las selecciones desde cualquier contenedor
-  const updateSelections = (containerId: 'left' | 'right', selected: (string | number)[]) => {
-    // Obtener los IDs de los items en el contenedor actual
-    const containerItems = containerId === 'left'
-      ? data.slice(0, 3).map(item => item.id)
-      : data.slice(3, 6).map(item => item.id);
-
-    // Filtrar las selecciones actuales para mantener solo las que no pertenecen al contenedor actual
-    const otherContainerSelections = selectedItems.filter(id =>
-      !containerItems.includes(Number(id))
-    );
-
-    // Combinar con las nuevas selecciones de este contenedor
-    const newSelectedItems = [...otherContainerSelections, ...selected];
-
+  // Función para actualizar la selección desde cualquier contenedor
+  const updateSelection = (selected: string | number | null) => {
     // Actualizar el estado global
-    setSelectedItems(newSelectedItems);
+    setSelectedItem(selected);
 
     // Actualizar isSelectedData
-    const selectedItemsData = newSelectedItems.map(id => {
-      const item = data.find(d => d.id === Number(id));
-      return item ? { id: item.id, name: item.name } : null;
-    }).filter(item => item !== null) as { id: number, name: string }[];
-
-    setIsSelectedData(selectedItemsData);
+    if (selected !== null) {
+      const item = data.find(d => d.id === Number(selected));
+      if (item) {
+        setIsSelectedData({ id: item.id, name: item.name });
+      }
+    } else {
+      setIsSelectedData(undefined);
+    }
   };
 
   const data = [
@@ -56,8 +45,8 @@ function App() {
           <div className='col-span-2 border-e border-primary/10 flex flex-col justify-start items-center'>
             <CardContainer
               items={data.slice(0, 3).map(item => ({ id: item.id, content: item.name }))}
-              selectedItems={selectedItems}
-              onSelectionChange={(selected) => updateSelections('left', selected)}
+              selectedItem={selectedItem}
+              onSelectionChange={updateSelection}
             />
           </div>
           <div className='col-span-8 '>
@@ -66,13 +55,13 @@ function App() {
           <div className='col-span-2 border-s border-primary/10 flex flex-col justify-start items-center'>
             <CardContainer
               items={data.slice(3, 6).map(item => ({ id: item.id, content: item.name }))}
-              selectedItems={selectedItems}
-              onSelectionChange={(selected) => updateSelections('right', selected)}
+              selectedItem={selectedItem}
+              onSelectionChange={updateSelection}
             />
           </div>
         </section>
         <p>
-          {selectedItems}
+          {selectedItem}
         </p>
       </div>
     </>
