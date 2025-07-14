@@ -1,17 +1,21 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from "gsap";
 import { LuSend, LuSparkles } from 'react-icons/lu';
 import Button from '../../../components/ui/Button';
+import type { SendMessageRequest } from '../types/chatTypes';
 
 interface ChatInputProps {
     setResults: (results: boolean) => void
-     results: boolean
+    results: boolean
     isSelected: {id: number, name: string}[]
     removeSelectedItem: (itemId: number) => void
+    onSendMessage: (messageData: SendMessageRequest) => void
+    loading?: boolean
 }
 
-function ChatInput({ setResults, results, isSelected, removeSelectedItem }: ChatInputProps) {
+function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSendMessage, loading }: ChatInputProps) {
     const boxRef = useRef<HTMLDivElement>(null);
+    const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
         if (boxRef.current) {
@@ -22,6 +26,28 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem }: Chat
             );
         }
     }, []);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        if (!inputValue.trim()) return;
+
+        const messageData: SendMessageRequest = {
+            prompt: inputValue.trim(),
+            selectedItems: isSelected || []
+        };
+
+        onSendMessage(messageData);
+        setInputValue('');
+        setResults(true);
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e);
+        }
+    };
 
     return (
         <>
@@ -61,18 +87,27 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem }: Chat
                         </div>
                     )}
                 </div>
-                <div className=' w-full h-full grid grid-cols-12'>
-                    <input type="text"
+                <form onSubmit={handleSubmit} className='w-full h-full grid grid-cols-12'>
+                    <input 
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyPress={handleKeyPress}
                         placeholder='Hazme una pregunta aquí...'
-                        className='px-10 w-full h-full col-span-11 outline-none text-white p-2 text-sm' />
+                        className='px-10 w-full h-full col-span-11 outline-none text-white p-2 text-sm bg-transparent'
+                        disabled={loading}
+                    />
                     <div className='w-full h-full flex justify-center items-center'>
                         <Button
-                            onClick={() => setResults(true)}
-                            variant='ghost' className='flex justify-center items-center'>
+                            type="submit"
+                            variant='ghost' 
+                            className='flex justify-center items-center'
+                            disabled={loading || !inputValue.trim()}
+                        >
                             <LuSend />
                         </Button>
                     </div>
-                </div>
+                </form>
             </div>
         </>
     )
