@@ -36,7 +36,7 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         throw new Error("Token no encontrado. El usuario no está autenticado.");
     }
 
-    const response = await fetch(`${API_URL}/chat`, {
+    const response = await fetch(`${API_URL}/iaprompt`, {
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${token}`,
