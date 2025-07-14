@@ -4,17 +4,17 @@ import ChatResults from "../components/ChatResults"
 
 
 interface ChatPageProps {
-    isSelected: [number][]
+    isSelected: {id: number, name: string}[]
+    removeSelectedItem: (itemId: number) => void
 }
-function ChatPage({ isSelected }: ChatPageProps) {
+function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
 
-    console.log("Mis consultas seleccionadas", isSelected)
 
     const [results, setResults] = useState<boolean>(false)
     return (
         <div className="relative max-w-4xl mx-auto p-4 h-full w-full flex flex-col justify-start ">
-            <ChatResults setResults={setResults} results={results} />
-            <ChatInput setResults={setResults} results={results} />
+            <ChatResults  setResults={setResults} results={results} />
+            <ChatInput isSelected={isSelected} setResults={setResults} results={results} removeSelectedItem={removeSelectedItem} />
         </div>
     )
 }

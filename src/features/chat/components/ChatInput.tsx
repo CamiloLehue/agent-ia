@@ -5,10 +5,12 @@ import Button from '../../../components/ui/Button';
 
 interface ChatInputProps {
     setResults: (results: boolean) => void
-    results: boolean
+     results: boolean
+    isSelected: {id: number, name: string}[]
+    removeSelectedItem: (itemId: number) => void
 }
 
-function ChatInput({ setResults, results }: ChatInputProps) {
+function ChatInput({ setResults, results, isSelected, removeSelectedItem }: ChatInputProps) {
     const boxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -38,6 +40,26 @@ function ChatInput({ setResults, results }: ChatInputProps) {
                             Chat <span className='font-bold'>IA</span>
                         </h5>
                     </div>
+
+                    {isSelected && isSelected.length > 0 && (
+                        <div className='flex flex-wrap gap-1'>
+                            {isSelected.map((item) => (
+                                <div 
+                                    key={item.id}
+                                    className='bg-background px-2 flex justify-center items-center gap-1 rounded-2xl py-0.5 border border-primary/20 shadow shadow-black cursor-pointer hover:bg-black/50 transition-colors'
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        removeSelectedItem(item.id);
+                                    }}
+                                >
+                                    <LuSparkles size={13} className='text-accent' />
+                                    <h5 className='text-primary/70'>
+                                        {item.name} <span className='text-xs opacity-50'>#{item.id}</span>
+                                    </h5>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
                 <div className=' w-full h-full grid grid-cols-12'>
                     <input type="text"
