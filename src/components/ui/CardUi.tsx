@@ -8,7 +8,7 @@ type CardUiProps = {
 
 function CardUi({ children, className }: CardUiProps) {
   return (
-    <div className={clsx("relative flex flex-col justify-start items-start  w-full h-full", className)}>
+    <div className={clsx("relative flex flex-col justify-start items-start ", className)}>
       <OuterContainer>
         <TopBlurDecorations />
         <MiddleContainer>
@@ -28,19 +28,19 @@ export default CardUi;
 
 function OuterContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative h-full w-full bg-bg p-0.5">
+    <div className="relative h-full min-w-50 bg-bg p-0.5 ">
       {children}
     </div>
   );
 }
 
 function TopBlurDecorations() {
-  return <div className="w-full h-10 absolute top-0 left-0 bg-bgsecondary blur opacity-20 rounded-full" />;
+  return <div className="w-full h-10 absolute top-0 left-0 bg-black blur opacity-50 rounded-full" />;
 }
 
 function MiddleContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative bg-black w-full h-full rounded-2xl p-0.5 border-t border-bgsecondary/60">
+    <div className="relative bg-black w-full h-full rounded-2xl p-1 border-t border-accent/40">
       {children}
     </div>
   );
@@ -48,7 +48,7 @@ function MiddleContainer({ children }: { children: React.ReactNode }) {
 
 function InnerContainer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative bg-bgt w-full h-full rounded-2xl p-1.5 border-t border-bgsecondary/80">
+    <div className="relative bg-secondary w-full h-full rounded-2xl p-1.5 border-t border-white/20">
       {children}
     </div>
   );
@@ -57,10 +57,10 @@ function InnerContainer({ children }: { children: React.ReactNode }) {
 function CornerDecorations() {
   return (
     <>
-      <div className="absolute w-10 h-10 bg-bgsecondary top-0 left-0 blur opacity-20" />
+      <div className="absolute w-10 h-10 bg-black top-0 left-0 blur opacity-20" />
       <div className="absolute w-5 max-h-20 bg-white top-0.5 left-2 blur-xs opacity-20" />
       <div className="absolute w-5 max-h-20 bg-white top-0.5 right-2 blur-xs opacity-20" />
-      <div className="absolute w-10 h-10 bg-bgsecondary top-0 right-0 blur opacity-20" />
+      <div className="absolute w-10 h-10 bg-black top-0 right-0 blur opacity-20" />
       <div className="absolute w-10 h-10 bg-black bottom-0 right-0 blur opacity-30" />
       <div className="absolute w-10 h-10 bg-black bottom-0 left-0 blur opacity-30" />
     </>
@@ -71,7 +71,7 @@ function CenterHighlights() {
   return (
     <>
       <div className="absolute left-[50%] -translate-x-1/2 w-[calc(100%-1rem)] h-2 top-1.5 bg-white blur-xs opacity-40" />
-      <div className="absolute left-[50%] -translate-x-1/2 w-[calc(100%-2.6rem)] h-5 bottom-2 bg-bgp blur-xs opacity-100" />
+      <div className="absolute left-[50%] -translate-x-1/2 w-[calc(100%-2.6rem)] h-5 bottom-2 bg-secondary blur-xs opacity-100" />
     </>
   );
 }
@@ -79,9 +79,9 @@ function CenterHighlights() {
 function ContentWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="relative bg-bgt border-2 border-bgt/80 
-        border-s border-s-bgsecondary/20 
-        border-e border-e-bgsecondary/20 
+      className="relative bg-bgt border-2 border-black/80 
+        border-s border-s-secondary/20 
+        border-e border-e-secondary/20 
         border-b border-b-transparent 
         shadow-lg shadow-bgp/30 w-full h-full 
         rounded-xl overflow-hidden"

@@ -1,9 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from "gsap";
 import { LuSend, LuSparkles } from 'react-icons/lu';
 import Button from '../../../components/ui/Button';
 
-function ChatInput() {
+interface ChatInputProps {
+    setResults: (results: boolean) => void
+    results: boolean
+}
+
+function ChatInput({ setResults, results }: ChatInputProps) {
     const boxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -20,7 +25,11 @@ function ChatInput() {
         <>
             <div
                 ref={boxRef}
-                className='bg-secondary border border-primary/20 text-white  rounded-2xl min-h-40 flex flex-col justify-start items-center overflow-hidden shadow-2xl shadow-background/40'
+                className={` z-2 
+                    ${results
+                        ? `bg-black backdrop-blur-xl -mt-36 mx-1`
+                        : 'bg-secondary   '}
+                         border border-primary/20 text-white flex flex-col justify-start items-center  rounded-2xl min-h-35 overflow-hidden shadow-2xl shadow-background/40 transition-all duration-200 ease-in `}
             >
                 <div className='w-full h-10 flex items-center justify-between p-2 '>
                     <div className='bg-background px-2 flex justify-center items-center gap-1 rounded-2xl rounded-bl-none py-0.5 border border-primary/20 shadow shadow-black'>
@@ -28,7 +37,6 @@ function ChatInput() {
                         <h5 className='text-primary/70 pe-3'>
                             Chat <span className='font-bold'>IA</span>
                         </h5>
-
                     </div>
                 </div>
                 <div className=' w-full h-full grid grid-cols-12'>
@@ -36,7 +44,9 @@ function ChatInput() {
                         placeholder='Hazme una pregunta aquí...'
                         className='px-10 w-full h-full col-span-11 outline-none text-white p-2 text-sm' />
                     <div className='w-full h-full flex justify-center items-center'>
-                        <Button variant='ghost' className='flex justify-center items-center'>
+                        <Button
+                            onClick={() => setResults(true)}
+                            variant='ghost' className='flex justify-center items-center'>
                             <LuSend />
                         </Button>
                     </div>

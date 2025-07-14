@@ -2,13 +2,23 @@ import ButtonExample from "../../components/ui/ButtonExample"
 
 function ExamplesPage() {
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-6">Componentes UI</h1>
-            <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4">Botones</h2>
-                <ButtonExample />
-            </section>
-        </div>
+        <>
+            <div className="container mx-auto p-4">
+                <h1 className="text-2xl font-bold mb-6">Componentes UI</h1>
+                <section className="mb-8">
+                    <h2 className="text-xl font-semibold mb-4">Card UI</h2>
+
+                   
+                </section>
+            </div>
+            <div className="container mx-auto p-4">
+                <h1 className="text-2xl font-bold mb-6">Componentes UI</h1>
+                <section className="mb-8">
+                    <h2 className="text-xl font-semibold mb-4">Botones</h2>
+                    <ButtonExample />
+                </section>
+            </div>
+        </>
     )
 }
 

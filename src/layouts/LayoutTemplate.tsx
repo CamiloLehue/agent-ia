@@ -7,7 +7,7 @@ function LayoutTemplate() {
     return (
         <div className='relative h-screen w-full flex flex-col justify-start items-center'>
             <div className='h-20 w-full text-white flex items-center justify-between'>
-                <div className='px-5'>
+                <div className='px-10'>
                     <img src={logo} alt="Logo ast" className='w-15' />
                 </div>
                 <div className='px-5 flex justify-center items-center gap-2'>
