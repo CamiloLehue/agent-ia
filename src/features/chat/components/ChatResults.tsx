@@ -41,13 +41,16 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
         }).format(date);
     };
 
+
+
+
     return (
         <div
             ref={boxRef}
             className={`${results
                 ? "w-full bg-secondary border border-primary/10 shadow-2xl rounded-2xl p-5 h-full"
                 : "h-0  bg-transparent border border-transparent shadow-none  "}
-                transition-all duration-500 ease-in overflow-hidden
+                transition-all duration-500 ease-in overflow-hidden max-h-[800px] pb-36
                 `}>
             {results && (
                 <div className="h-full flex flex-col">
@@ -56,7 +59,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                             <LuSparkles className="text-accent" size={16} />
                             <small className="text-primary/70 font-medium">Conversación</small>
                         </div>
-                        
+
                         <div className="flex items-center gap-2">
                             <ConnectionStatus isConnected={isConnected} error={error} />
                             {loading && (
@@ -64,7 +67,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                             )}
                         </div>
                     </div>
-                    
+
                     <div className="flex-1 overflow-y-auto space-y-4 pr-2">
                         {messages.length === 0 && !loading && (
                             <div className="text-center text-primary/50 py-8">
@@ -86,38 +89,33 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                                         <LuBot size={16} className="text-accent" />
                                     </div>
                                 )}
-                                
+
                                 <div className={`max-w-[80%] ${message.role === 'user' ? 'order-1' : ''}`}>
                                     <div
-                                        className={`p-3 rounded-2xl ${
-                                            message.role === 'user'
-                                                ? 'bg-accent text-white rounded-br-sm'
-                                                : 'bg-background border border-primary/10 text-primary rounded-bl-sm'
-                                        }`}
+                                        className={`p-3 rounded-2xl ${message.role === 'user'
+                                            ? 'bg-accent text-white rounded-br-sm'
+                                            : 'bg-background border border-primary/10 text-primary rounded-bl-sm'
+                                            }`}
                                     >
                                         <p className="text-sm leading-relaxed whitespace-pre-wrap">
                                             {message.content}
                                         </p>
-                                        
-                                        {message.selectedItems && message.selectedItems.length > 0 && (
+
+                                        {message.selectedItem && (
                                             <div className="mt-2 pt-2 border-t border-white/20">
                                                 <div className="flex flex-wrap gap-1">
-                                                    {message.selectedItems.map((item) => (
-                                                        <span
-                                                            key={item.id}
-                                                            className="text-xs bg-white/20 px-2 py-1 rounded-full"
-                                                        >
-                                                            {item.name}
-                                                        </span>
-                                                    ))}
+                                                    <span
+                                                        className="text-xs bg-white/20 px-2 py-1 rounded-full"
+                                                    >
+                                                        {message.selectedItem.name}
+                                                    </span>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
-                                    
-                                    <div className={`text-xs text-primary/50 mt-1 ${
-                                        message.role === 'user' ? 'text-right' : 'text-left'
-                                    }`}>
+
+                                    <div className={`text-xs text-primary/50 mt-1 ${message.role === 'user' ? 'text-right' : 'text-left'
+                                        }`}>
                                         {formatTime(message.timestamp)}
                                     </div>
                                 </div>
@@ -138,8 +136,8 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                                 <div className="bg-background border border-primary/10 p-3 rounded-2xl rounded-bl-sm">
                                     <div className="flex space-x-1">
                                         <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce"></div>
-                                        <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                                        <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                                        <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                                        <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                                     </div>
                                 </div>
                             </div>

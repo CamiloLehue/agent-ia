@@ -28,11 +28,11 @@ export const useChat = () => {
             // Enviar mensaje al servicio
             const response = await sendChatMessage(messageData);
 
-            if (response.success) {
+            if (response.success !== false) {
                 // Agregar respuesta del asistente
                 const assistantMessage: ChatMessage = {
                     id: (Date.now() + 1).toString(),
-                    content: response.message,
+                    content: response.respuesta,
                     role: 'assistant',
                     timestamp: new Date()
                 };

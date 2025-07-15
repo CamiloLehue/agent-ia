@@ -41,8 +41,8 @@ function Login() {
                     <h5 className="font-bold"><span className="text-danger">WI</span>SENSOR</h5>
                     <small className="font-thin py-1">Presenta</small>
                     <div className="relative">
-                        <div className="absolute font-black  top-1 -left-1 blur-lg text-primary rounded-bl-none rounded-tr-none bg-gradient-to-bl from-danger/80 to-indigo-500 border-t border-primary/40 shadow shadow-secondary px-8 rounded-full py-0.5">AGENTE IA</div>
-                        <div className="font-black relative text-primary rounded-bl-none rounded-tr-none bg-gradient-to-bl from-danger/80 to-indigo-500 border-t border-primary/40 shadow shadow-secondary px-8 rounded-full py-0.5"><small>AGENTE <span className="bg-black text-indigo-300 px-2 py-1 rounded ">IA</span></small></div>
+                        <div className="absolute font-black  -top-0 -left-1 blur-lg text-primary rounded-bl-none rounded-tr-none bg-gradient-to-bl from-danger/80 to-indigo-500 border-t border-primary/40 shadow shadow-secondary px-8 rounded-full py-0.5">AGENTE IA</div>
+                        <div className="font-black relative text-primary rounded-bl-none rounded-tr-none  px-8 rounded-full py-0.5"><small>AGENTE <span className="bg-black text-indigo-300 px-2 py-1 rounded ">IA</span></small></div>
                     </div>
                     <img
                         ref={imageRef}
@@ -58,7 +58,8 @@ function Login() {
                         <label htmlFor="username" className="text-gray block mb-1">Correo Electrónico</label>
                         <input
                             id="username"
-                            type="username"
+                            
+                            type="email"
                             placeholder="tuemail@ejemplo.com"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}

@@ -12,8 +12,8 @@ export interface ChatMessage {
 }
 
 export interface ChatResponse {
-    message: string
-    success: boolean
+    respuesta: string
+    success?: boolean
     error?: string
 }
 

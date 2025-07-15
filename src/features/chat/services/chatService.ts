@@ -44,7 +44,8 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         },
         body: JSON.stringify({
             prompt: messageData.prompt,
-            typeSearch: messageData.selectedItem || 1,
+            // selectedItem: messageData.selectedItem,
+            typeSearch:  2,
             // timestamp: new Date().toISOString()
         })
     });
@@ -54,6 +55,17 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
     }
 
-    const data: ChatResponse = await response.json();
-    return data;
+    const data = await response.json();
+
+    console.log("Mi servicio de data es:", data);
+    console.log("respuesta:", data.respuesta);
+    
+    // Crear la respuesta en el formato esperado
+    const chatResponse: ChatResponse = {
+        respuesta: data.respuesta || data.message || "Sin respuesta",
+        success: true,
+        error: undefined
+    };
+    
+    return chatResponse;
 };
