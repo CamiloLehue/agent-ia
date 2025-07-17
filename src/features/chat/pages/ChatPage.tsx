@@ -13,7 +13,7 @@ function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
     const { messages, loading, error, sendMessage, isConnected } = useChat()
 
     return (
-        <div className="h-full w-full flex flex-col  p-6 ">
+        <div className="h-full w-full flex flex-col overflow-hidden p-6">
             {/* Área de resultados que se expande cuando hay contenido */}
             <div className={`${results ? 'flex-1' : 'flex-none'} overflow-hidden transition-all duration-500`}>
                 <ChatResults  
