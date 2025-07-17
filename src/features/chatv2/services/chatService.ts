@@ -1,7 +1,7 @@
 import type { ChatItemType, ChatResponse, SendMessageRequest } from "../types/chatTypes";
 
-// En React con Vite, las variables de entorno del cliente deben tener el prefijo VITE_
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+// En Next.js, las variables de entorno del cliente deben tener el prefijo NEXT_PUBLIC_
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export const getChatItems = async (): Promise<ChatItemType[]> => {
     const token = localStorage.getItem("token");
@@ -42,8 +42,8 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         },
         body: JSON.stringify({
             prompt: messageData.prompt,
-            selectedItem: messageData.selectedItem,
-            typeSearch: 2,
+            // selectedItem: messageData.selectedItem,
+            typeSearch:  2,
             // timestamp: new Date().toISOString()
         })
     });
