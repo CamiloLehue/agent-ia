@@ -15,7 +15,7 @@ const NetworkDemo = () => {
           {/* Componente principal grande */}
           <div className="flex justify-center">
             <NetworkNodes 
-              nodeCount={20}
+              nodeCount={35}
               width={800}
               height={500}
               className="shadow-2xl"
@@ -26,10 +26,10 @@ const NetworkDemo = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="text-center">
               <h3 className="text-xl font-semibold text-white mb-4">
-                Red Densa
+                Red Super Densa
               </h3>
               <NetworkNodes 
-                nodeCount={25}
+                nodeCount={40}
                 width={380}
                 height={280}
                 className="mx-auto"
@@ -38,10 +38,10 @@ const NetworkDemo = () => {
             
             <div className="text-center">
               <h3 className="text-xl font-semibold text-white mb-4">
-                Red Dispersa
+                Red Densa
               </h3>
               <NetworkNodes 
-                nodeCount={12}
+                nodeCount={25}
                 width={380}
                 height={280}
                 className="mx-auto"

@@ -17,7 +17,7 @@ interface NetworkNodesProps {
 }
 
 const NetworkNodes = ({
-  nodeCount = 15,
+  nodeCount = 25,
   className = "",
   width = 1920,
   height = 1080
@@ -69,7 +69,7 @@ const NetworkNodes = ({
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, width, height);
 
-      const maxDistance = 150;
+      const maxDistance = 200;
 
       // Dibujar conexiones primero
       for (let i = 0; i < nodesRef.current.length; i++) {
@@ -82,11 +82,21 @@ const NetworkNodes = ({
 
           if (distance < maxDistance) {
             const opacity = Math.max(0, 1 - distance / maxDistance);
+            
+            // Línea principal más intensa
             ctx.beginPath();
             ctx.moveTo(nodeA.x, nodeA.y);
             ctx.lineTo(nodeB.x, nodeB.y);
-            ctx.strokeStyle = `rgba(239, 68, 68, ${opacity * 0.8})`;
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = `rgba(220, 38, 38, ${opacity * 0.9})`;
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+            
+            // Efecto de brillo en las líneas
+            ctx.beginPath();
+            ctx.moveTo(nodeA.x, nodeA.y);
+            ctx.lineTo(nodeB.x, nodeB.y);
+            ctx.strokeStyle = `rgba(248, 113, 113, ${opacity * 0.4})`;
+            ctx.lineWidth = 4;
             ctx.stroke();
           }
         }
@@ -94,28 +104,40 @@ const NetworkNodes = ({
 
       // Dibujar nodos encima de las líneas
       nodesRef.current.forEach(node => {
-        // Círculo principal rojo
+        // Halo exterior brillante
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius + 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(220, 38, 38, 0.3)';
+        ctx.fill();
+        
+        // Círculo principal rojo más intenso
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#ef4444';
+        ctx.fillStyle = '#dc2626';
         ctx.fill();
 
-        // Borde más oscuro
+        // Borde aún más oscuro e intenso
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = '#dc2626';
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#991b1b';
+        ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Brillo interno
+        // Brillo interno más intenso
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius * 0.6, 0, Math.PI * 2);
-        ctx.fillStyle = '#fca5a5';
+        ctx.fillStyle = '#f87171';
         ctx.fill();
 
-        // Punto central brillante
+        // Punto central más brillante
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius * 0.3, 0, Math.PI * 2);
+        ctx.fillStyle = '#fecaca';
+        ctx.fill();
+        
+        // Punto central ultra brillante
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius * 0.15, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
         ctx.fill();
       });

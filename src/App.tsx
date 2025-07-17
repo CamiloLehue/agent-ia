@@ -40,66 +40,34 @@ function App() {
     { name: 'Files', id: 5 },
   ]
   return (
-    <>
-      {/* Barra de navegación */}
-      <nav className="w-full bg-gray-800 border-b border-gray-700 px-6 py-3">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">WIBOTs</h1>
-          <div className="flex gap-4">
-            <button
-              onClick={() => setCurrentView('main')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                currentView === 'main'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              Chat Principal
-            </button>
-            <button
-              onClick={() => setCurrentView('network-demo')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
-                currentView === 'network-demo'
-                  ? 'bg-red-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              Red de Nodos
-            </button>
+    <div className="w-full ">
+      <div className=" w-full flex flex-col pb-4">
+        <div className="flex-1 grid grid-cols-12 gap-4 px-4 overflow-hidden min-h-0">
+          <div className='col-span-2 border-e border-primary/10 flex flex-col justify-start items-center overflow-hidden'>
+            <CardContainer
+              items={data.slice(0, 3).map(item => ({ id: item.id, content: item.name }))}
+              selectedItem={selectedItem}
+              onSelectionChange={updateSelection}
+            />
+          </div>
+          <div className='col-span-8 overflow-hidden'>
+            <ChatPage isSelected={isSelectedData} removeSelectedItem={removeSelectedItem} />
+          </div>
+          <div className='col-span-2 border-s border-primary/10 flex flex-col justify-start items-center overflow-hidden'>
+            <CardContainer
+              items={data.slice(3, 6).map(item => ({ id: item.id, content: item.name }))}
+              selectedItem={selectedItem}
+              onSelectionChange={updateSelection}
+            />
           </div>
         </div>
-      </nav>
-
-      {/* Contenido principal */}
-      {currentView === 'main' && (
-        <div className="container mx-auto h-full w-full flex flex-col justify-start items-center">
-          <section className="h-full w-full grid grid-cols-12 mb-10 mt-6">
-            <div className='col-span-2 border-e border-primary/10 flex flex-col justify-start items-center'>
-              <CardContainer
-                items={data.slice(0, 3).map(item => ({ id: item.id, content: item.name }))}
-                selectedItem={selectedItem}
-                onSelectionChange={updateSelection}
-              />
-            </div>
-            <div className='col-span-8 '>
-              <ChatPage isSelected={isSelectedData} removeSelectedItem={removeSelectedItem} />
-            </div>
-            <div className='col-span-2 border-s border-primary/10 flex flex-col justify-start items-center'>
-              <CardContainer
-                items={data.slice(3, 6).map(item => ({ id: item.id, content: item.name }))}
-                selectedItem={selectedItem}
-                onSelectionChange={updateSelection}
-              />
-            </div>
-          </section>
-          <p>
-            {selectedItem}
-          </p>
-        </div>
-      )}
-
-      {currentView === 'network-demo' && <NetworkDemo />}
-    </>
+        {selectedItem && (
+          <div className="flex-shrink-0 text-center py-2 text-primary/70">
+            Seleccionado: {selectedItem}
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 

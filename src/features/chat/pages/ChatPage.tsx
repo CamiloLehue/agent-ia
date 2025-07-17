@@ -13,23 +13,36 @@ function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
     const { messages, loading, error, sendMessage, isConnected } = useChat()
 
     return (
-        <div className="relative max-w-4xl mx-auto p-4 h-full w-full flex flex-col justify-start ">
-            <ChatResults  
-                setResults={setResults} 
-                results={results} 
-                messages={messages}
-                loading={loading}
-                error={error}
-                isConnected={isConnected}
-            />
-            <ChatInput 
-                isSelected={isSelected} 
-                setResults={setResults} 
-                results={results} 
-                removeSelectedItem={removeSelectedItem}
-                onSendMessage={sendMessage}
-                loading={loading}
-            />
+        <div className="h-full w-full flex flex-col  p-6 ">
+            {/* Área de resultados que se expande cuando hay contenido */}
+            <div className={`${results ? 'flex-1' : 'flex-none'} overflow-hidden transition-all duration-500`}>
+                <ChatResults  
+                    setResults={setResults} 
+                    results={results} 
+                    messages={messages}
+                    loading={loading}
+                    error={error}
+                    isConnected={isConnected}
+                />
+            </div>
+            
+            {/* Espaciador que centra el input cuando no hay resultados */}
+            {!results && <div className="flex-1"></div>}
+            
+            {/* Input del chat */}
+            <div className="flex-shrink-0">
+                <ChatInput 
+                    isSelected={isSelected} 
+                    setResults={setResults} 
+                    results={results} 
+                    removeSelectedItem={removeSelectedItem}
+                    onSendMessage={sendMessage}
+                    loading={loading}
+                />
+            </div>
+            
+            {/* Espaciador que centra el input cuando no hay resultados */}
+            {!results && <div className="flex-1"></div>}
         </div>
     )
 }

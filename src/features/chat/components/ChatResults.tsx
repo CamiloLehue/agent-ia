@@ -57,14 +57,14 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
     return (
         <div
             ref={boxRef}
-            className={`${results
-                ? "w-full bg-secondary border border-primary/10 shadow-2xl rounded-2xl p-5 h-full"
-                : "h-0  bg-transparent border border-transparent shadow-none  "}
-                transition-all duration-500 ease-in overflow-hidden max-h-[800px] pb-36
-                `}>
+            className={`w-full transition-all duration-500 ease-in-out ${
+                results
+                    ? "h-full bg-secondary border border-primary/10 shadow-2xl rounded-2xl p-5 flex flex-col opacity-100"
+                    : "h-auto bg-transparent border-transparent shadow-none opacity-0 pointer-events-none"
+            }`}>
             {results && (
-                <div className="h-full flex flex-col">
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/10">
+                <>
+                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/10 flex-shrink-0">
                         <div className="flex items-center gap-2">
                             <LuSparkles className="text-accent" size={16} />
                             <small className="text-primary/70 font-medium">Conversación</small>
@@ -78,7 +78,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+                    <div className="flex-1 overflow-y-auto space-y-4 pr-2 min-h-0">
                         {messages.length === 0 && !loading && (
                             <div className="text-center text-primary/50 py-8">
                                 <LuBot size={32} className="mx-auto mb-2 opacity-50" />
@@ -170,7 +170,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
 
                         <div ref={messagesEndRef} />
                     </div>
-                </div>
+                </>
             )}
         </div>
     )
