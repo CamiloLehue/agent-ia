@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from 'react-router'
 import Button from '../components/ui/Button'
 import logo from '../../public/ast-white.svg'
+import NetworkNodes from '../components/ui/NetworkNodes';
 
 function LayoutTemplate() {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ function LayoutTemplate() {
     return (
         <div className='relative min-h-screen max-h-screen overflow-hidden h-full w-full flex flex-col justify-start items-center'>
             <img src="/bg.png" alt="Background" className='absolute w-full h-full object-cover mix-blend-overlay' />
-
+            <NetworkNodes/>
             <div className='w-full h-full '>
                 <div className=' w-full text-white flex items-center justify-between'>
                     <div className='px-10'>
