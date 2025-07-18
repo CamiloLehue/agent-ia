@@ -64,12 +64,12 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
             ref={boxRef}
             className={`w-full transition-all duration-500 ease-in-out ${
                 results
-                    ? "h-full bg-secondary border border-primary/10 shadow-2xl rounded-2xl p-5 flex flex-col opacity-100"
+                    ? "h-full bg-secondary border border-primary/20 shadow-2xl rounded-2xl p-5 flex flex-col opacity-100"
                     : "h-auto bg-transparent border-transparent shadow-none opacity-0 pointer-events-none"
             }`}>
             {results && (
                 <>
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/10 flex-shrink-0">
+                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/20 flex-shrink-0">
                         <div className="flex items-center gap-2">
                             <LuSparkles className="text-accent" size={16} />
                             <small className="text-primary/70 font-medium">Conversación</small>
@@ -109,7 +109,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                                     <div
                                         className={`p-3 rounded-2xl ${message.role === 'user'
                                             ? 'bg-accent text-white rounded-br-sm'
-                                            : 'bg-background border border-primary/10 text-primary rounded-bl-sm'
+                                            : 'bg-background border border-primary/20 text-primary rounded-bl-sm'
                                             }`}
                                     >
                                         <div className="flex items-start justify-between gap-2">
@@ -121,7 +121,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                                             {message.role === 'assistant' && speechSupported && (
                                                 <button
                                                     onClick={() => handleSpeak(message.content)}
-                                                    className={`flex-shrink-0 p-1 rounded-full hover:bg-primary/10 transition-colors ${
+                                                    className={`flex-shrink-0 p-1 rounded-full hover:bg-primary/20 transition-colors ${
                                                         isSpeaking ? 'text-accent animate-pulse' : 'text-primary/60 hover:text-primary'
                                                     }`}
                                                     title={isSpeaking ? 'Detener lectura' : 'Leer mensaje'}
@@ -163,7 +163,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                                 <div className="flex-shrink-0 w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
                                     <LuBot size={16} className="text-accent" />
                                 </div>
-                                <div className="bg-background border border-primary/10 p-3 rounded-2xl rounded-bl-sm">
+                                <div className="bg-background border border-primary/20 p-3 rounded-2xl rounded-bl-sm">
                                     <div className="flex space-x-1">
                                         <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce"></div>
                                         <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
