@@ -25,20 +25,15 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
         if (boxRef.current) {
             gsap.fromTo(
                 boxRef.current,
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 0.5 }
+                { opacity: 0, y: 300 },
+                { opacity: 1, y: 0, duration: 1 }
             );
         }
     }, []);
 
     useEffect(() => {
-        // Scroll automático al último mensaje de forma más controlada
-        if (messagesEndRef.current && messages.length > 0) {
-            const parent = messagesEndRef.current.parentElement;
-            if (parent) {
-                parent.scrollTop = parent.scrollHeight;
-            }
-        }
+        // Scroll automático al último mensaje
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
     const formatTime = (date: Date) => {
@@ -62,14 +57,14 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
     return (
         <div
             ref={boxRef}
-            className={`w-full transition-all duration-500 ease-in-out ${
-                results
-                    ? "h-full bg-secondary border border-primary/10 shadow-2xl rounded-2xl p-5 flex flex-col opacity-100"
-                    : "h-auto bg-transparent border-transparent shadow-none opacity-0 pointer-events-none"
-            }`}>
+            className={`${results
+                ? "w-full bg-secondary border border-primary/10 shadow-2xl rounded-2xl p-5 h-full"
+                : "h-0  bg-transparent border border-transparent shadow-none  "}
+                transition-all duration-500 ease-in overflow-hidden max-h-[800px] pb-36
+                `}>
             {results && (
-                <>
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/10 flex-shrink-0">
+                <div className="h-full flex flex-col">
+                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/10">
                         <div className="flex items-center gap-2">
                             <LuSparkles className="text-accent" size={16} />
                             <small className="text-primary/70 font-medium">Conversación</small>
@@ -83,7 +78,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto space-y-4 pr-2 min-h-0 max-h-[calc(100vh-200px)]">
+                    <div className="flex-1 overflow-y-auto space-y-4 pr-2">
                         {messages.length === 0 && !loading && (
                             <div className="text-center text-primary/50 py-8">
                                 <LuBot size={32} className="mx-auto mb-2 opacity-50" />
@@ -175,7 +170,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
 
                         <div ref={messagesEndRef} />
                     </div>
-                </>
+                </div>
             )}
         </div>
     )

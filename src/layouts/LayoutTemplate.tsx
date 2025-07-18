@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from 'react-router'
 import Button from '../components/ui/Button'
 import logo from '../../public/ast-white.svg'
+import NetworkNodes from '../components/ui/NetworkNodes';
 
 function LayoutTemplate() {
     const navigate = useNavigate()
@@ -12,9 +13,11 @@ function LayoutTemplate() {
         navigate('/auth');
     };
     return (
-        <div className='relative h-screen w-full flex flex-col justify-start items-center'>
-            <div className='h-20 w-full text-white flex items-center justify-between'>
-                <div className='px-10'>
+        <div className='relative h-screen w-full overflow-hidden flex flex-col'>
+            <NetworkNodes />
+            <div className='absolute left-[50%] -translate-x-1/2 w-[700px] rounded-full blur-3xl h-[700px] bg-[#430606] opacity-30 z-0'></div>
+            <div className='relative z-10 w-full flex-shrink-0 text-white flex items-center justify-between py-6 px-4'>
+                <div className='px-6'>
                     <img src={logo} alt="Logo ast" className='w-15' />
                 </div>
                 <div className='px-5 flex justify-center items-center gap-2'>
@@ -25,11 +28,7 @@ function LayoutTemplate() {
                     >
                         Chat Agent
                     </Button>
-                    {/* <Button
-                        onClick={() => navigate('/examples')}
-                        variant='ghost' size='sm'>
-                        Examples UI Components
-                    </Button> */}
+
                     {!token && <Button variant='solid' size='sm'>
                         Iniciar Sesión
                     </Button>
@@ -41,7 +40,8 @@ function LayoutTemplate() {
                     </Button>
                 </div>
             </div>
-            <div className='w-full h-full '>
+
+            <div className='relative z-10 flex-1 overflow-hidden'>
                 <Outlet />
             </div>
         </div>
