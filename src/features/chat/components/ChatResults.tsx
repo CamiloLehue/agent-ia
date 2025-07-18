@@ -25,15 +25,20 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
         if (boxRef.current) {
             gsap.fromTo(
                 boxRef.current,
-                { opacity: 0, y: 300 },
-                { opacity: 1, y: 0, duration: 1 }
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 0.5 }
             );
         }
     }, []);
 
     useEffect(() => {
-        // Scroll automático al último mensaje
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Scroll automático al último mensaje de forma más controlada
+        if (messagesEndRef.current && messages.length > 0) {
+            const parent = messagesEndRef.current.parentElement;
+            if (parent) {
+                parent.scrollTop = parent.scrollHeight;
+            }
+        }
     }, [messages]);
 
     const formatTime = (date: Date) => {
@@ -78,7 +83,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto space-y-4 pr-2 min-h-0">
+                    <div className="flex-1 overflow-y-auto space-y-4 pr-2 min-h-0 max-h-[calc(100vh-200px)]">
                         {messages.length === 0 && !loading && (
                             <div className="text-center text-primary/50 py-8">
                                 <LuBot size={32} className="mx-auto mb-2 opacity-50" />
