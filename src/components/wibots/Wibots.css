@@ -1,13 +1,5 @@
 /* Estilos y animaciones adicionales para el componente Wibots */
 
-.wibots-glow {
-  filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.4));
-  transition: filter 0.5s ease;
-}
-
-.wibots-glow:hover {
-  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.7));
-}
 
 /* Animación de pulso para usar en momentos específicos */
 @keyframes wibots-pulse {

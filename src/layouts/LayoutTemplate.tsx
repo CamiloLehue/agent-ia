@@ -3,6 +3,7 @@ import Button from '../components/ui/Button'
 import logo from '../../public/ast-white.svg'
 import NetworkNodes from '../components/ui/NetworkNodes';
 import Wibots from '../components/wibots/Wibots';
+import { GiruViewer } from '../components/wibots/GiruViewer';
 
 function LayoutTemplate() {
     const navigate = useNavigate()
@@ -43,7 +44,9 @@ function LayoutTemplate() {
                 </div>
             </div>
             <div className='relative z-10 flex-1 overflow-hidden'>
-                <Wibots />
+                <div className='absolute left-[50%] -translate-x-1/2 -top-40'>
+                    <GiruViewer />
+                </div>
                 <Outlet />
             </div>
         </div>

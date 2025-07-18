@@ -37,7 +37,6 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
         }
     }, []);
 
-    // Actualizar el input con el transcript del reconocimiento de voz
     useEffect(() => {
         if (transcript) {
             setInputValue(transcript);
