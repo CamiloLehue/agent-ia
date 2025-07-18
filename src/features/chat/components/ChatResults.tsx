@@ -83,7 +83,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto space-y-4 pr-2 min-h-0 max-h-[calc(100vh-200px)]">
+                    <div className="flex-1 overflow-y-auto space-y-4 pr-2 min-h-0 max-h-[calc(100vh-362px)]">
                         {messages.length === 0 && !loading && (
                             <div className="text-center text-primary/50 py-8">
                                 <LuBot size={32} className="mx-auto mb-2 opacity-50" />
