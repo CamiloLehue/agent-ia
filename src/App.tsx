@@ -10,7 +10,7 @@ function App() {
     setIsSelectedData(undefined);
     setSelectedItem(null);
   };
-  const [selectedItem, setSelectedItem] = useState<string | number | null>(4);
+  const [selectedItem, setSelectedItem] = useState<string | number | null>(null);
 
   const updateSelection = (selected: string | number | null) => {
     setSelectedItem(selected);

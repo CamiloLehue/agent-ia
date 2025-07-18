@@ -112,6 +112,7 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
             <div
                 ref={boxRef}
                 className={` z-2 
+                    
                     ${results
                         ? `bg-gradient-to-tl from-danger/20 to-black backdrop-blur-xl -mt-36 mx-1`
                         : 'bg-secondary   '}
@@ -188,8 +189,8 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                             type="button"
                             variant='ghost'
                             className={`flex justify-center items-center transition-all duration-200 ${selectedFile
-                                    ? 'text-accent bg-accent/10 border border-accent/20'
-                                    : 'text-primary hover:bg-primary/10 hover:text-accent'
+                                ? 'text-accent bg-accent/10 border border-accent/20'
+                                : 'text-primary hover:bg-primary/10 hover:text-accent'
                                 }`}
                             onClick={handleFileButtonClick}
                             disabled={loading}
@@ -199,18 +200,33 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                         </Button>
                     </div>
 
-                    <input
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyPress={handleKeyPress}
-                        placeholder={isListening ? '🎤 Escuchando...' : 'Hazme una pregunta aquí...'}
-                        className={`px-10 w-[95%] h-full col-span-10 outline-none text-white p-2 text-sm bg-transparent transition-all duration-200 ${isListening
-                            ? 'animate-pulse border-l-2 border-red-400 bg-red-500/5'
-                            : 'focus:bg-white/5'
-                            }`}
-                        disabled={loading}
-                    />
+                    {
+                        isSelected?.id !== 4 ? <input
+                            type="text"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                            placeholder={isListening ? '🎤 Escuchando...' : 'Actualmente solo disponible STACK'}
+                            className={`px-10 w-[95%] h-full col-span-10 outline-none text-white p-2 text-sm bg-transparent transition-all duration-200 ${isListening
+                                ? 'animate-pulse border-l-2 border-red-400 bg-red-500/5'
+                                : 'focus:bg-white/5'
+                                } cursor-not-allowed`}
+                            disabled={true}
+                        /> :
+                            <input
+                                type="text"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                placeholder={isListening ? '🎤 Escuchando...' : 'Hazme una pregunta aquí...'}
+                                className={`px-10 w-[95%] h-full col-span-10 outline-none text-white p-2 text-sm bg-transparent transition-all duration-200 ${isListening
+                                    ? 'animate-pulse border-l-2 border-red-400 bg-red-500/5'
+                                    : 'focus:bg-white/5'
+                                    }`}
+                                disabled={loading}
+                            />
+                    }
+
 
                     {/* Botón de reconocimiento de voz */}
                     {isSupported && (
