@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
+import type { ThreeEvent,RootState } from '@react-three/fiber';
 import { useGLTF, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
-import { GLTF } from 'three-stdlib';
+import type { GLTF } from 'three-stdlib';
 
 type GLTFResult = GLTF & {
   nodes: Record<string, THREE.Mesh>;
@@ -25,7 +26,7 @@ export function GiruModel({
   onClick,
 }: GiruModelProps) {
   const modelRef = useRef<THREE.Group>(null);
-  const { nodes, materials } = useGLTF('/wibots/giru2.glb') as GLTFResult;
+  const gltf = useGLTF('/wibots/giru2.glb') as unknown as GLTFResult;
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
 
@@ -37,7 +38,7 @@ export function GiruModel({
     };
   }, [hovered]);
 
-  useFrame((state, delta) => {
+  useFrame((state: RootState, delta: number) => {
     if (modelRef.current) {
       if (autoRotate) {
         modelRef.current.rotation.y += delta * 0.1; 
@@ -76,23 +77,29 @@ export function GiruModel({
       position={new THREE.Vector3(...position)}
       rotation={new THREE.Euler(...rotation)}
       scale={new THREE.Vector3(scale, scale, scale)}
-      onClick={(e) => {
+      onClick={(e: ThreeEvent<MouseEvent>) => {
+        e.stopPropagation();
         setClicked(!clicked);
         if (onClick) onClick();
-        e.stopPropagation();
       }}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
+      onPointerOver={(e: ThreeEvent<PointerEvent>) => {
+        e.stopPropagation();
+        setHovered(true);
+      }}
+      onPointerOut={(e: ThreeEvent<PointerEvent>) => {
+        e.stopPropagation();
+        setHovered(false);
+      }}
     >
       {/* Aplicamos un material personalizado al modelo */}
       <group>
-        <primitive object={nodes.Scene || Object.values(nodes)[0]} />
+        <primitive object={gltf.nodes.Scene || Object.values(gltf.nodes)[0]} />
       </group>
       
       {/* Efecto de resplandor rojo */}
       {(hovered || clicked) && (
-        <mesh position={[0, 0, -0.5]} scale={[2, 2, 0.1]}>
-          {/* <sphereGeometry args={[1, 32, 32]} /> */}
+        <mesh position={new THREE.Vector3(0, 0, -0.5)} scale={new THREE.Vector3(2, 2, 0.1)}>
+          <planeGeometry args={[1, 1]} />
           <MeshDistortMaterial
             color="#ff0000"
             distort={0.3}
@@ -109,4 +116,7 @@ export function GiruModel({
 }
 
 // Precarga el modelo para mejorar el rendimiento
-useGLTF.preload('/wibots/giruv2.glb');
+
+
+// Precarga el modelo para mejorar el rendimiento
+useGLTF.preload('/wibots/giru2.glb');
