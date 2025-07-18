@@ -42,14 +42,25 @@ function CardContainer({ items, onSelectionChange, selectedItem: externalSelecte
   return (
     <div className="flex flex-wrap gap-4 justify-center">
       {items.map(item => (
-        <Card
-          key={item.id}
-          id={item.id}
-          isSelected={selectedItem === item.id}
-          onSelect={handleSelect}
-        >
-          {item.content}
-        </Card>
+        item.id === 4
+          ? <Card
+            key={item.id}
+            id={item.id}
+            isSelected={selectedItem === item.id}
+            onSelect={handleSelect}
+          >
+            {item.content}
+          </Card>
+          : <div className='relative'>
+              <Card
+                key={item.id}
+                id={item.id}
+                isSelected={selectedItem === item.id}
+                onSelect={handleSelect}
+              >
+                {item.content}
+              </Card>
+          </div>
       ))}
     </div>
   );

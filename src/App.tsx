@@ -27,12 +27,21 @@ function App() {
 
   const data = [
     { name: 'Todos', id: 0 },
+    { name: 'STRACK', id: 4 },
     { name: 'ARSA', id: 1 },
     { name: 'Clíma', id: 2 },
     { name: 'Seguridad', id: 3 },
-    { name: 'STRACK', id: 4 },
     { name: 'Files', id: 5 },
   ]
+
+  //  const data = [
+  //   { name: 'Todos', id: 0 },
+  //   { name: 'STRACK', id: 4 },
+  //   { name: 'ARSA', id: 1 },
+  //   { name: 'Clíma', id: 2 },
+  //   { name: 'Seguridad', id: 3 },
+  //   { name: 'Files', id: 5 },
+  // ]
   return (
     <div className="flex-1 grid grid-cols-12 px-4 min-h-0 h-full container mx-auto">
       <div className='col-span-2  border-e border-primary/10 flex flex-col justify-start items-center '>

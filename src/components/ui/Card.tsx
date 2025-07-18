@@ -11,7 +11,7 @@ function Card({ id, children, isSelected, onSelect }: CardProps) {
     return (
         <div
             onClick={() => onSelect(id)}
-            className="w-full flex justify-center items-center relative">
+            className="w-full flex justify-center items-center relative group">
 
             <div className="relative group h-40 w-40 p-5 cursor-pointer">
                 <div className="absolute left-[50%] top-0 -translate-x-1/2  mx-auto rounded-full  translate-y-10 bg-primary/10 blur-xl transition-all duration-200 ease-in-out"></div>
