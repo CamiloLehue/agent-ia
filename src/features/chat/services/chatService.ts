@@ -44,6 +44,7 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
             prompt: messageData.prompt,
             selectedItem: messageData.selectedItem,
             typeSearch: 4,
+            // file: messageData.file, // Parámetro para archivo en base64 (comentado por ahora)
             // timestamp: new Date().toISOString()
         })
     });

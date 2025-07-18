@@ -17,7 +17,15 @@ export interface ChatResponse {
     error?: string
 }
 
+export interface FileAttachment {
+    name: string
+    type: string
+    size: number
+    base64: string
+}
+
 export interface SendMessageRequest {
     prompt: string
     selectedItem?: {id: number, name: string}
+    file?: FileAttachment
 }

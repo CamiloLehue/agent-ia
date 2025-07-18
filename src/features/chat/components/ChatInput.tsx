@@ -4,6 +4,8 @@ import { LuSend, LuSparkles, LuMic, LuMicOff, LuPaperclip } from 'react-icons/lu
 import Button from '../../../components/ui/Button';
 import type { SendMessageRequest } from '../types/chatTypes';
 import { useVoice } from '../hooks/useVoice';
+import { useFileUpload } from '../hooks/useFileUpload';
+import { FORMAT_CONFIGS, formatFileSize, getFileIcon } from '../utils/fileUtils';
 
 interface ChatInputProps {
     setResults: (results: boolean) => void
@@ -16,9 +18,9 @@ interface ChatInputProps {
 
 function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSendMessage, loading }: ChatInputProps) {
     const boxRef = useRef<HTMLDivElement>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState('');
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    
+    // Hook para reconocimiento de voz
     const {
         isListening,
         transcript,
@@ -28,6 +30,21 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
         isSupported,
         error
     } = useVoice();
+
+    // Hook para manejo de archivos (solo PDF por defecto)
+    const {
+        selectedFile,
+        isProcessing,
+        error: fileError,
+        fileInputRef,
+        handleFileSelect,
+        removeFile,
+        triggerFileSelect,
+        acceptString
+    } = useFileUpload({
+        allowedFormats: FORMAT_CONFIGS.PDF_ONLY, // Puedes cambiar esto por FORMAT_CONFIGS.DOCUMENTS, etc.
+        onError: (error) => console.error('Error de archivo:', error)
+    });
 
     useEffect(() => {
         if (boxRef.current) {
@@ -52,12 +69,14 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
 
         const messageData: SendMessageRequest = {
             prompt: inputValue.trim(),
-            selectedItem: isSelected || undefined
+            selectedItem: isSelected || undefined,
+            file: selectedFile || undefined
         };
 
         onSendMessage(messageData);
         setInputValue('');
         resetTranscript();
+        removeFile(); // Limpiar archivo después de enviar
         setResults(true);
     };
 
@@ -78,33 +97,24 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
         }
     };
 
-    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setSelectedFile(file);
-            console.log('Archivo seleccionado:', file.name);
-        }
-    };
-
-    const handleFileButtonClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const removeSelectedFile = () => {
-        setSelectedFile(null);
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
-    };
-
     return (
         <>
-            {/* Notificación de error */}
+            {/* Notificación de error de voz */}
             {error && (
                 <div className="fixed top-4 right-4 z-50 bg-red-500/90 text-white px-4 py-2 rounded-lg shadow-lg border border-red-400 animate-pulse">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-red-300 rounded-full"></div>
                         <span className="text-sm font-medium">{error}</span>
+                    </div>
+                </div>
+            )}
+
+            {/* Notificación de error de archivo */}
+            {fileError && (
+                <div className="fixed top-16 right-4 z-50 bg-orange-500/90 text-white px-4 py-2 rounded-lg shadow-lg border border-orange-400">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-orange-300 rounded-full"></div>
+                        <span className="text-sm font-medium">{fileError}</span>
                     </div>
                 </div>
             )}
@@ -152,21 +162,24 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                     )}
                 </div>
 
+                {/* Mostrar archivo seleccionado */}
                 {selectedFile && (
                     <div className='w-full px-4 pb-2'>
                         <div className='bg-primary/10 border border-primary/20 rounded-lg p-2 flex items-center justify-between'>
                             <div className='flex items-center gap-2'>
-                                <LuPaperclip size={14} className='text-accent' />
-                                <span className='text-sm text-primary/80 truncate max-w-48'>
-                                    {selectedFile.name}
-                                </span>
-                                <span className='text-xs text-primary/50'>
-                                    ({(selectedFile.size / 1024).toFixed(1)} KB)
-                                </span>
+                                <span className='text-lg'>{getFileIcon(selectedFile.type)}</span>
+                                <div className='flex flex-col'>
+                                    <span className='text-sm text-primary/80 truncate max-w-48'>
+                                        {selectedFile.name}
+                                    </span>
+                                    <span className='text-xs text-primary/50'>
+                                        {formatFileSize(selectedFile.size)}
+                                    </span>
+                                </div>
                             </div>
                             <button
-                                onClick={removeSelectedFile}
-                                className='text-red-400 hover:text-red-300 transition-colors text-sm'
+                                onClick={removeFile}
+                                className='text-red-400 hover:text-red-300 transition-colors text-sm px-2 py-1 hover:bg-red-500/10 rounded'
                                 title='Eliminar archivo'
                             >
                                 ✕
@@ -183,18 +196,19 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                             type='file'
                             onChange={handleFileSelect}
                             className='hidden'
-                            accept='.pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif'
+                            accept={acceptString}
                         />
                         <Button
                             type="button"
                             variant='ghost'
-                            className={`flex justify-center items-center transition-all duration-200 ${selectedFile
-                                ? 'text-accent bg-accent/10 border border-accent/20'
-                                : 'text-primary hover:bg-primary/10 hover:text-accent'
-                                }`}
-                            onClick={handleFileButtonClick}
-                            disabled={loading}
-                            title='Subir archivo'
+                            className={`flex justify-center items-center transition-all duration-200 ${
+                                selectedFile 
+                                    ? 'text-accent bg-accent/10 border border-accent/20' 
+                                    : 'text-primary hover:bg-primary/10 hover:text-accent'
+                            } ${isProcessing ? 'animate-pulse' : ''}`}
+                            onClick={triggerFileSelect}
+                            disabled={loading || isProcessing}
+                            title={isProcessing ? 'Procesando archivo...' : 'Subir archivo PDF'}
                         >
                             <LuPaperclip size={18} />
                         </Button>
