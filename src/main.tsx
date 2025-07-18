@@ -7,11 +7,13 @@ import LayoutTemplate from './layouts/LayoutTemplate.tsx'
 import ExamplesPage from './features/examples/ExamplesPage.tsx'
 import ProtectedRoute from './features/auth/components/login/ProtectedRoute.tsx'
 import Login from './features/auth/components/login/Login.tsx'
+import Document from './features/documents/Document.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path='/documentacion' element={<Document />} />
         <Route index element={<Login />} />
         <Route path='/auth' element={<Login />} />
         <Route element={<ProtectedRoute />}>

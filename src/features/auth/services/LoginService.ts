@@ -15,10 +15,17 @@ export const loginUser = async (
     body: JSON.stringify(credentials),
   });
 
+  const json = await response.json();
+  
   if (!response.ok) {
+    // Si la respuesta contiene un campo 'detail', lo incluimos en el error
+    if (json && json.detail) {
+      const error = new Error(json.detail) as Error & { detail?: string };
+      error.detail = json.detail;
+      throw error;
+    }
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  const json: LoginType = await response.json();
-  return json;
+  return json as LoginType;
 };

@@ -29,7 +29,8 @@ export function useLogin() {
             }
         } catch (err: unknown) {
             console.error("Error durante login:", err);
-            if (err instanceof Error && 'detail' in err) {
+            // Verificamos si el error tiene la propiedad 'detail' que indica credenciales incorrectas
+            if (err instanceof Error && (err as Error & { detail?: string }).detail === "Credenciales incorrectas") {
                 setError("Credenciales incorrectas.");
                 setMessage("Credenciales incorrectas.");
             } else {
