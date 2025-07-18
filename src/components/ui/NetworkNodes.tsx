@@ -17,7 +17,7 @@ interface NetworkNodesProps {
 }
 
 const NetworkNodes = ({
-  nodeCount = 25,
+  nodeCount = 105,
   className = "",
   width = 1920,
   height = 1080
@@ -82,15 +82,15 @@ const NetworkNodes = ({
 
           if (distance < maxDistance) {
             const opacity = Math.max(0, 1 - distance / maxDistance);
-            
+
             // Línea principal más intensa
             ctx.beginPath();
             ctx.moveTo(nodeA.x, nodeA.y);
             ctx.lineTo(nodeB.x, nodeB.y);
-            ctx.strokeStyle = `rgba(220, 38, 38, ${opacity * 0.9})`;
+            ctx.strokeStyle = `rgba(220, 0, 0, ${opacity * 0.9})`;
             ctx.lineWidth = 2.5;
             ctx.stroke();
-            
+
             // Efecto de brillo en las líneas
             ctx.beginPath();
             ctx.moveTo(nodeA.x, nodeA.y);
@@ -109,11 +109,11 @@ const NetworkNodes = ({
         ctx.arc(node.x, node.y, node.radius + 3, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(220, 38, 38, 0.3)';
         ctx.fill();
-        
+
         // Círculo principal rojo más intenso
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#dc2626';
+        ctx.fillStyle = '#991b1b';
         ctx.fill();
 
         // Borde aún más oscuro e intenso
@@ -134,7 +134,7 @@ const NetworkNodes = ({
         ctx.arc(node.x, node.y, node.radius * 0.3, 0, Math.PI * 2);
         ctx.fillStyle = '#fecaca';
         ctx.fill();
-        
+
         // Punto central ultra brillante
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius * 0.15, 0, Math.PI * 2);
