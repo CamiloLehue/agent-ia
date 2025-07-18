@@ -165,7 +165,7 @@ const NetworkNodes = ({
         node.vy += (Math.random() - 0.5) * 0.02;
 
         // Limitar velocidad
-        const maxSpeed = 1.5;
+        const maxSpeed = 0.3;
         const speed = Math.sqrt(node.vx * node.vx + node.vy * node.vy);
         if (speed > maxSpeed) {
           node.vx = (node.vx / speed) * maxSpeed;

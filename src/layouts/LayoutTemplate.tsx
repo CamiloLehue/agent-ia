@@ -14,7 +14,7 @@ function LayoutTemplate() {
     };
     return (
         <div className='relative h-screen w-full overflow-hidden flex flex-col'>
-            <img src="/bg.png" alt="Background" className='absolute inset-0 w-full h-full object-cover mix-blend-overlay' />
+            <img src="/bg.png" alt="Background" className='absolute inset-0 w-full h-full object-cover mix-blend-hard-light ' />
             <NetworkNodes/>
             <div className='absolute left-[50%] -translate-x-1/2 w-[700px] rounded-full blur-3xl h-[700px] bg-danger opacity-30 z-0'></div>
             {/* Header fijo */}
