@@ -2,7 +2,6 @@ import { Outlet, useNavigate } from 'react-router'
 import Button from '../components/ui/Button'
 import logo from '../../public/ast-white.svg'
 import NetworkNodes from '../components/ui/NetworkNodes';
-import Wibots from '../components/wibots/Wibots';
 import { GiruViewer } from '../components/wibots/GiruViewer';
 
 function LayoutTemplate() {
@@ -44,7 +43,7 @@ function LayoutTemplate() {
                 </div>
             </div>
             <div className='relative z-10 flex-1 overflow-hidden'>
-                <div className='absolute left-[50%] -translate-x-1/2 -top-40'>
+                <div className='absolute left-[50%] -translate-x-1/2 -top-40 w-full h-full'>
                     <GiruViewer />
                 </div>
                 <Outlet />

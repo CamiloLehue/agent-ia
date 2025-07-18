@@ -109,4 +109,4 @@ export function GiruModel({
 }
 
 // Precarga el modelo para mejorar el rendimiento
-useGLTF.preload('/wibots/Giru.glb');
+useGLTF.preload('/wibots/giruv2.glb');
