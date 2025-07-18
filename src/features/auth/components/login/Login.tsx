@@ -58,7 +58,6 @@ function Login() {
                         <label htmlFor="username" className="text-gray block mb-1">Correo Electrónico</label>
                         <input
                             id="username"
-                            
                             type="email"
                             placeholder="tuemail@ejemplo.com"
                             value={username}
@@ -79,7 +78,7 @@ function Login() {
                         />
                     </div>
                     {
-                        message && <small className="text-danger">{message}</small>
+                        message && <small className={` ${message.includes("Login exitoso.") ? "text-lime-400" : "text-danger"}`}>{message}</small>
                     }
 
                     <Button
