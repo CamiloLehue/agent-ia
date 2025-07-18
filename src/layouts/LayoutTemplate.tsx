@@ -40,7 +40,6 @@ function LayoutTemplate() {
                     </Button>
                 </div>
             </div>
-
             <div className='relative z-10 flex-1 overflow-hidden'>
                 <Outlet />
             </div>
