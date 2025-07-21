@@ -1,8 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { ElevenLabsClient, play } from '@elevenlabs/elevenlabs-js';
 
 // Tipos locales para evitar problemas de reconocimiento
 type SpeechRecognitionType = any;
 type SpeechSynthesisType = SpeechSynthesis;
+
+// Inicializar el cliente de ElevenLabs
+const ELEVENLABS_API_KEY = 'sk_4bae74518c4ab7cfd0391b5006b5b4cedebcecdbbe91f49b';
+const elevenlabs = new ElevenLabsClient({
+  apiKey: ELEVENLABS_API_KEY,
+});
 
 interface UseVoiceReturn {
   // Speech Recognition
@@ -162,38 +169,62 @@ export const useVoice = (): UseVoiceReturn => {
     setTranscript('');
   }, []);
 
-  const speak = useCallback((text: string) => {
-    if (synthRef.current && speechSupported) {
-      // Cancelar cualquier síntesis en curso
-      synthRef.current.cancel();
+  const speak = useCallback(async (text: string) => {
+    try {
+      // Cancelar cualquier síntesis en curso si está hablando
+      if (isSpeaking && synthRef.current) {
+        synthRef.current.cancel();
+      }
       
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'es-ES';
-      utterance.rate = 0.9;
-      utterance.pitch = 1;
-      utterance.volume = 0.8;
-
-      utterance.onstart = () => {
-        setIsSpeaking(true);
-      };
-
-      utterance.onend = () => {
-        setIsSpeaking(false);
-      };
-
-      utterance.onerror = () => {
-        setIsSpeaking(false);
-      };
-
-      synthRef.current.speak(utterance);
+      setIsSpeaking(true);
+      
+      // Usar ElevenLabs para la síntesis de voz
+      // ID de voz de ElevenLabs (puedes cambiarlo por otra voz)
+      const voiceId = '21m00Tcm4TlvDq8ikWAM'; // Rachel voice
+      
+      const audio = await elevenlabs.textToSpeech.convert(voiceId, {
+        text: text,
+        modelId: 'eleven_multilingual_v2', // Modelo multilingüe para mejor soporte de español
+        voiceSettings: {
+          stability: 0.5,
+          similarityBoost: 0.75,
+        }
+      });
+      
+      // Reproducir el audio
+      await play(audio);
+      
+      setIsSpeaking(false);
+    } catch (error) {
+      console.error('Error en la síntesis de voz de ElevenLabs:', error);
+      setIsSpeaking(false);
+      
+      // Fallback a la síntesis de voz del navegador si hay un error
+      if (synthRef.current && speechSupported) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'es-ES';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = 0.8;
+        
+        utterance.onstart = () => setIsSpeaking(true);
+        utterance.onend = () => setIsSpeaking(false);
+        utterance.onerror = () => setIsSpeaking(false);
+        
+        synthRef.current.speak(utterance);
+      }
     }
-  }, [speechSupported]);
+  }, [isSpeaking, speechSupported]);
 
   const stopSpeaking = useCallback(() => {
+    // Detener la síntesis de voz del navegador si está en uso
     if (synthRef.current) {
       synthRef.current.cancel();
-      setIsSpeaking(false);
     }
+    
+    // No hay un método directo para detener la reproducción de ElevenLabs
+    // pero actualizamos el estado para reflejar que ya no está hablando
+    setIsSpeaking(false);
   }, []);
 
   return {
