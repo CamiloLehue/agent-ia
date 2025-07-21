@@ -179,15 +179,15 @@ export const useVoice = (): UseVoiceReturn => {
       setIsSpeaking(true);
       
       // Usar ElevenLabs para la síntesis de voz
-      // ID de voz de ElevenLabs (puedes cambiarlo por otra voz)
-      const voiceId = '21m00Tcm4TlvDq8ikWAM'; // Rachel voice
+      // ID de voz de ElevenLabs - Voz femenina en español
+      const voiceId = 'XrExE9yKIg1WjnnlVkGX'; // Medellin - Voz femenina en español
       
       const audio = await elevenlabs.textToSpeech.convert(voiceId, {
         text: text,
         modelId: 'eleven_multilingual_v2', // Modelo multilingüe para mejor soporte de español
         voiceSettings: {
-          stability: 0.5,
-          similarityBoost: 0.75,
+          stability: 0.6, // Aumentado para mayor estabilidad en español
+          similarityBoost: 0.8, // Aumentado para mantener el acento español
         }
       });
       
@@ -204,8 +204,39 @@ export const useVoice = (): UseVoiceReturn => {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'es-ES';
         utterance.rate = 0.9;
-        utterance.pitch = 1;
+        utterance.pitch = 1.2; // Pitch más alto para voz femenina
         utterance.volume = 0.8;
+        
+        // Intentar seleccionar una voz femenina en español si está disponible
+        const setSpanishFemaleVoice = () => {
+          const voices = window.speechSynthesis.getVoices();
+          // Buscar primero voces que explícitamente sean femeninas en español
+          let spanishFemaleVoice = voices.find(voice => 
+            voice.lang.includes('es') && 
+            (voice.name.toLowerCase().includes('female') || 
+             voice.name.toLowerCase().includes('mujer') || 
+             voice.name.toLowerCase().includes('chica') || 
+             voice.name.toLowerCase().includes('monica') || 
+             voice.name.toLowerCase().includes('paulina') || 
+             voice.name.toLowerCase().includes('female')));
+          
+          // Si no encontramos una voz explícitamente femenina, buscar cualquier voz en español
+          if (!spanishFemaleVoice) {
+            spanishFemaleVoice = voices.find(voice => voice.lang.includes('es'));
+          }
+          
+          if (spanishFemaleVoice) {
+            utterance.voice = spanishFemaleVoice;
+          }
+        };
+        
+        // Algunas implementaciones cargan las voces de forma asíncrona
+        if (window.speechSynthesis.getVoices().length > 0) {
+          setSpanishFemaleVoice();
+        } else {
+          // Si las voces no están cargadas, esperar al evento voiceschanged
+          window.speechSynthesis.onvoiceschanged = setSpanishFemaleVoice;
+        }
         
         utterance.onstart = () => setIsSpeaking(true);
         utterance.onend = () => setIsSpeaking(false);
