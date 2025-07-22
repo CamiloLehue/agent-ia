@@ -63,7 +63,7 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
         setInputValue('');
         resetTranscript();
         setResults(true);
-        
+
         // Limpiar el archivo seleccionado después de enviar
         if (selectedFile) {
             removeSelectedFile();
@@ -183,7 +183,7 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                         </div>
                     </div>
                 )}
-                
+
                 {/* Mostrar el archivo PDF activo */}
                 {!selectedFile && activePdfId && activePdfName && (
                     <div className='w-full px-4 pb-2'>
@@ -231,18 +231,8 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                     </div>
 
                     {
-                        isSelected?.id !== 4 ? <input
-                            type="text"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyPress={handleKeyPress}
-                            placeholder={isListening ? '🎤 Escuchando...' : 'Actualmente solo disponible STACK'}
-                            className={`px-10 w-[95%] h-full col-span-10 outline-none text-white p-2 text-sm bg-transparent transition-all duration-200 ${isListening
-                                ? 'animate-pulse border-l-2 border-red-400 bg-red-500/5'
-                                : 'focus:bg-white/5'
-                                } cursor-not-allowed`}
-                            disabled={true}
-                        /> :
+                        isSelected?.id === 4 || isSelected?.id === 5 || isSelected?.id === 0
+                            ?
                             <input
                                 type="text"
                                 value={inputValue}
@@ -254,6 +244,19 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                                     : 'focus:bg-white/5'
                                     }`}
                                 disabled={loading}
+                            />
+                            :
+                            <input
+                                type="text"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                placeholder={isListening ? '🎤 Escuchando...' : 'Actualmente solo disponible STACK & Documentos'}
+                                className={`px-10 w-[95%] h-full col-span-10 outline-none text-white p-2 text-sm bg-transparent transition-all duration-200 ${isListening
+                                    ? 'animate-pulse border-l-2 border-red-400 bg-red-500/5'
+                                    : 'focus:bg-white/5'
+                                    } cursor-not-allowed`}
+                                disabled={true}
                             />
                     }
 

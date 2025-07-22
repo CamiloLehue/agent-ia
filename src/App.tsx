@@ -28,10 +28,10 @@ function App() {
   const data = [
     { name: 'Todos', id: 0 },
     { name: 'STRACK', id: 4 },
+    { name: 'Documentos', id: 5 },
     { name: 'ARSA', id: 1 },
     { name: 'Clíma', id: 2 },
     { name: 'Seguridad', id: 3 },
-    { name: 'Files', id: 5 },
   ]
 
   //  const data = [
@@ -54,7 +54,7 @@ function App() {
       <div className='col-span-8  '>
         <ChatPage isSelected={isSelectedData} removeSelectedItem={removeSelectedItem} />
       </div>
-      <div className='col-span-2   border-s border-primary/10 flex flex-col justify-start items-center '>
+      <div className='col-span-2 border-s border-primary/10 flex flex-col justify-start items-center '>
         <CardContainer
           items={data.slice(3, 6).map(item => ({ id: item.id, content: item.name }))}
           selectedItem={selectedItem}
