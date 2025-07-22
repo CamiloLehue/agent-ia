@@ -252,7 +252,7 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyPress={handleKeyPress}
                                 placeholder={isListening ? '🎤 Escuchando...' : 'Actualmente solo disponible STACK & Documentos'}
-                                className={`px-10 w-[95%] h-full col-span-10 outline-none text-white p-2 text-sm bg-transparent transition-all duration-200 ${isListening
+                                className={`px-10 w-[95%] h-full col-span-10  outline-none text-white p-2 text-sm bg-danger/30 rounded-2xl transition-all duration-200 ${isListening
                                     ? 'animate-pulse border-l-2 border-red-400 bg-red-500/5'
                                     : 'focus:bg-white/5'
                                     } cursor-not-allowed`}
