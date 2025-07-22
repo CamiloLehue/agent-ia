@@ -26,7 +26,7 @@ export function GiruModel({
   onClick,
 }: GiruModelProps) {
   const modelRef = useRef<THREE.Group>(null);
-  const gltf = useGLTF('/wibots/giru2.glb') as unknown as GLTFResult;
+  const gltf = useGLTF('/wibots/girubola v3 rojo blanco.glb') as unknown as GLTFResult;
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
 
@@ -119,4 +119,4 @@ export function GiruModel({
 
 
 // Precarga el modelo para mejorar el rendimiento
-useGLTF.preload('/wibots/giru2.glb');
+useGLTF.preload('/wibots/girubola v3 rojo blanco.glb');

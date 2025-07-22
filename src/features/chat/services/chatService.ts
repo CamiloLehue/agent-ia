@@ -66,10 +66,10 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         const formData = new FormData();
         
         // Convertir el archivo a base64
-        const fileBase64 = await fileToBase64(messageData.file);
+        // const fileBase64 = await fileToBase64(messageData.file);
         
         formData.append('prompt', messageData.prompt);
-        formData.append('base64_pdf', fileBase64);
+        formData.append('base64_pdf', messageData.file);
         formData.append('fileName', messageData.file.name);
         formData.append('typeSearch', '4');
         
