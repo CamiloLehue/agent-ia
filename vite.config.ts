@@ -15,7 +15,7 @@ export default defineConfig({
     //   }
     // },
     host: "0.0.0.0",
-    port: 5191,
-    allowedHosts: ["wibots.wisensor.cl", "apiwibot.wisensor.cl"],
+    port: 5190,
+    allowedHosts: ["wibots.wisensor.cl", "apiwibots.wisensor.cl"],
   },
 })
