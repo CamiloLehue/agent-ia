@@ -27,6 +27,33 @@ export const getChatItems = async (): Promise<ChatItemType[]> => {
     return data;
 };
 
+// Función auxiliar para manejar la respuesta de chat
+const handleChatResponse = async (response: Response): Promise<ChatResponse> => {
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
+    }
+
+    const data: ChatResponse = await response.json();
+
+    return data;
+};
+
+// Función para convertir un archivo a base64
+const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            // Extraer solo la parte base64 (eliminar el prefijo data:application/pdf;base64,)
+            const base64String = reader.result as string;
+            const base64Content = base64String.split(',')[1];
+            resolve(base64Content);
+        };
+        reader.onerror = error => reject(error);
+    });
+};
+
 export const sendChatMessage = async (messageData: SendMessageRequest): Promise<ChatResponse> => {
     const token = localStorage.getItem("token");
 
@@ -34,6 +61,35 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         throw new Error("Token no encontrado. El usuario no está autenticado.");
     }
 
+    // Si hay un archivo adjunto, usar FormData para enviar el archivo en base64
+    if (messageData.file) {
+        const formData = new FormData();
+        
+        // Convertir el archivo a base64
+        const fileBase64 = await fileToBase64(messageData.file);
+        
+        formData.append('prompt', messageData.prompt);
+        formData.append('base64_pdf', fileBase64);
+        formData.append('fileName', messageData.file.name);
+        formData.append('typeSearch', '4');
+        
+        if (messageData.selectedItem) {
+            formData.append('selectedItem', JSON.stringify(messageData.selectedItem));
+        }
+        
+        const response = await fetch(`${API_URL}/procesar-pdf`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                // No establecer Content-Type, el navegador lo hará automáticamente con el boundary correcto
+            },
+            body: formData
+        });
+        
+        return handleChatResponse(response);
+    }
+    
+    // Si no hay archivo, usar JSON como antes
     const response = await fetch(`${API_URL}/iaprompt`, {
         method: 'POST',
         headers: {
@@ -47,23 +103,6 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
             // timestamp: new Date().toISOString()
         })
     });
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
-    }
-
-    const data = await response.json();
-
-    console.log("Mi servicio de data es:", data);
-    console.log("respuesta:", data.respuesta);
     
-    // Crear la respuesta en el formato esperado
-    const chatResponse: ChatResponse = {
-        respuesta: data.respuesta || data.message || "Sin respuesta",
-        success: true,
-        error: undefined
-    };
-    
-    return chatResponse;
+    return handleChatResponse(response);
 };

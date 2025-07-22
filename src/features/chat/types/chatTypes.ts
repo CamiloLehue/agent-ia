@@ -20,4 +20,5 @@ export interface ChatResponse {
 export interface SendMessageRequest {
     prompt: string
     selectedItem?: {id: number, name: string}
+    file?: File
 }

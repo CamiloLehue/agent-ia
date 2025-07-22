@@ -52,13 +52,19 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
 
         const messageData: SendMessageRequest = {
             prompt: inputValue.trim(),
-            selectedItem: isSelected || undefined
+            selectedItem: isSelected || undefined,
+            file: selectedFile || undefined
         };
 
         onSendMessage(messageData);
         setInputValue('');
         resetTranscript();
         setResults(true);
+        
+        // Limpiar el archivo seleccionado después de enviar
+        if (selectedFile) {
+            removeSelectedFile();
+        }
     };
 
     const handleKeyPress = (e: React.KeyboardEvent) => {

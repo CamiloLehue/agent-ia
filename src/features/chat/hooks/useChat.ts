@@ -16,7 +16,9 @@ export const useChat = () => {
         // Agregar mensaje del usuario inmediatamente
         const userMessage: ChatMessage = {
             id: Date.now().toString(),
-            content: messageData.prompt,
+            content: messageData.file 
+                ? `${messageData.prompt} [Archivo adjunto: ${messageData.file.name}]` 
+                : messageData.prompt,
             role: 'user',
             timestamp: new Date(),
             selectedItem: messageData.selectedItem
