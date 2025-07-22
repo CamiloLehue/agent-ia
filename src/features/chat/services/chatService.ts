@@ -61,7 +61,7 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         throw new Error("Token no encontrado. El usuario no está autenticado.");
     }
 
-    // Si hay un archivo adjunto, usar FormData para enviar el archivo en base64
+    // Si hay un archivo adjunto, usar el endpoint /procesar-pdf
     if (messageData.file) {
         const formData = new FormData();
         
@@ -89,7 +89,24 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         return handleChatResponse(response);
     }
     
-    // Si no hay archivo, usar JSON como antes
+    // Si hay un pdfId, usar el endpoint /preguntar-pdf
+    if (messageData.pdfId) {
+        const response = await fetch(`${API_URL}/preguntar-pdf`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: messageData.pdfId,
+                prompt: messageData.prompt
+            })
+        });
+        
+        return handleChatResponse(response);
+    }
+    
+    // Si no hay archivo ni pdfId, usar el endpoint normal
     const response = await fetch(`${API_URL}/iaprompt`, {
         method: 'POST',
         headers: {

@@ -10,7 +10,7 @@ interface ChatPageProps {
 
 function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
     const [results, setResults] = useState<boolean>(false)
-    const { messages, loading, error, sendMessage, isConnected } = useChat()
+    const { messages, loading, error, sendMessage, isConnected, activePdfId, activePdfName, clearActivePdf } = useChat()
 
     return (
         <div className="h-full w-full flex flex-col overflow-hidden p-4">
@@ -33,6 +33,9 @@ function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
                     removeSelectedItem={removeSelectedItem}
                     onSendMessage={sendMessage}
                     loading={loading}
+                    activePdfId={activePdfId}
+                    activePdfName={activePdfName}
+                    clearActivePdf={clearActivePdf}
                 />
             </div>
             {!results && <div className="flex-1"></div>}

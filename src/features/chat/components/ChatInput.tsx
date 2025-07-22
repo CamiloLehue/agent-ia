@@ -12,9 +12,12 @@ interface ChatInputProps {
     removeSelectedItem: () => void
     onSendMessage: (messageData: SendMessageRequest) => void
     loading?: boolean
+    activePdfId?: number | null
+    activePdfName?: string | null
+    clearActivePdf?: () => void
 }
 
-function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSendMessage, loading }: ChatInputProps) {
+function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSendMessage, loading, activePdfId, activePdfName, clearActivePdf }: ChatInputProps) {
     const boxRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState('');
@@ -174,6 +177,27 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                                 onClick={removeSelectedFile}
                                 className='text-red-400 hover:text-red-300 transition-colors text-sm'
                                 title='Eliminar archivo'
+                            >
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                )}
+                
+                {/* Mostrar el archivo PDF activo */}
+                {!selectedFile && activePdfId && activePdfName && (
+                    <div className='w-full px-4 pb-2'>
+                        <div className='bg-blue-500/10 border border-blue-500/20 rounded-lg p-2 flex items-center justify-between'>
+                            <div className='flex items-center gap-2'>
+                                <LuPaperclip size={14} className='text-blue-400' />
+                                <span className='text-sm text-primary/80 truncate max-w-48'>
+                                    PDF activo: {activePdfName}
+                                </span>
+                            </div>
+                            <button
+                                onClick={clearActivePdf}
+                                className='text-red-400 hover:text-red-300 transition-colors text-sm'
+                                title='Eliminar PDF activo'
                             >
                                 ✕
                             </button>

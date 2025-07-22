@@ -15,10 +15,13 @@ export interface ChatResponse {
     respuesta: string
     success?: boolean
     error?: string
+    id?: number
+    mensaje?: string
 }
 
 export interface SendMessageRequest {
     prompt: string
     selectedItem?: {id: number, name: string}
     file?: File
+    pdfId?: number
 }
