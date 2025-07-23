@@ -4,13 +4,14 @@ import ChatPage from './features/chat/pages/ChatPage';
 
 
 function App() {
-  const [isSelectedData, setIsSelectedData] = useState<{ id: number, name: string } | undefined>(undefined);
+  // Preseleccionar STRACK (ID 4) por defecto
+  const [isSelectedData, setIsSelectedData] = useState<{ id: number, name: string } | undefined>({ id: 4, name: 'STRACK' });
 
   const removeSelectedItem = () => {
     setIsSelectedData(undefined);
     setSelectedItem(null);
   };
-  const [selectedItem, setSelectedItem] = useState<string | number | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | number | null>(4);
 
   const updateSelection = (selected: string | number | null) => {
     setSelectedItem(selected);

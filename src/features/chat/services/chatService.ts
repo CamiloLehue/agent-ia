@@ -68,10 +68,16 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         // Convertir el archivo a base64
         // const fileBase64 = await fileToBase64(messageData.file);
         
+        // Determinar el typeSearch basado en el selectedItem
+        let typeSearch = '4'; // Por defecto STRACK
+        if (messageData.selectedItem) {
+            typeSearch = messageData.selectedItem.id.toString();
+        }
+        
         formData.append('prompt', messageData.prompt);
         formData.append('base64_pdf', messageData.file);
         formData.append('fileName', messageData.file.name);
-        formData.append('typeSearch', '4');
+        formData.append('typeSearch', typeSearch);
         
         if (messageData.selectedItem) {
             formData.append('selectedItem', JSON.stringify(messageData.selectedItem));
@@ -107,6 +113,12 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
     }
     
     // Si no hay archivo ni pdfId, usar el endpoint normal
+    // Determinar el typeSearch basado en el selectedItem
+    let typeSearch = 4; // Por defecto STRACK
+    if (messageData.selectedItem) {
+        typeSearch = messageData.selectedItem.id;
+    }
+    
     const response = await fetch(`${API_URL}/iaprompt`, {
         method: 'POST',
         headers: {
@@ -116,7 +128,7 @@ export const sendChatMessage = async (messageData: SendMessageRequest): Promise<
         body: JSON.stringify({
             prompt: messageData.prompt,
             selectedItem: messageData.selectedItem,
-            typeSearch: 4,
+            typeSearch: typeSearch,
             // timestamp: new Date().toISOString()
         })
     });
