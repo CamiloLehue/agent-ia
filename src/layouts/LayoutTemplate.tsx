@@ -39,6 +39,12 @@ function LayoutTemplate() {
             >
               Chat Agent
             </Button>
+        
+            <Button 
+            variant="solid"
+              size="sm"
+            onClick={() => window.location.href = "/mockups/"}>Ir a Mockups</Button>
+          
             <Button variant="solid" size="sm" className="">
               {username ? `Hola, ${username}` : "Usuario"}
             </Button>

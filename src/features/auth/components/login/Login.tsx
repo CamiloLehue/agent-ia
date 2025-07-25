@@ -50,7 +50,7 @@ function Login() {
                         alt="Logo animado"
                         className="w-[35%] transition-transform duration-100 ease-out will-change-transform my-12"
                     />
-                    <small className="text-gray">D E M O v1.0</small>
+                    <small className="text-gray">Prerelease v1.1.0</small>
                 </div>
 
                 <form onSubmit={handleSubmit} className="relative flex flex-col gap-4 mt-5 justify-center items-center w-full max-w-[300px]">
