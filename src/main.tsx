@@ -11,7 +11,7 @@ import Document from './features/documents/Document.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/chatbot">
       <Routes>
         <Route path='/documentacion' element={<Document />} />
         <Route index element={<Login />} />
