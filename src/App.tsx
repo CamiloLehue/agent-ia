@@ -44,24 +44,38 @@ function App() {
   //   { name: 'Files', id: 5 },
   // ]
   return (
-    <div className="flex-1 grid grid-cols-12 px-4 min-h-0 h-full container mx-auto">
-      <div className='col-span-2  border-e border-primary/10 flex flex-col justify-start items-center '>
+    // <div className="flex-1 grid grid-cols-12 px-4 min-h-0 h-full container mx-auto">
+    //   <div className='col-span-2  border-e border-primary/10 flex flex-col justify-start items-center '>
+    //     <CardContainer
+    //       items={data.slice(0, 3).map(item => ({ id: item.id, content: item.name }))}
+    //       selectedItem={selectedItem}
+    //       onSelectionChange={updateSelection}
+    //     />
+    //   </div>
+    //   <div className='col-span-8  '>
+    //     <ChatPage isSelected={isSelectedData} removeSelectedItem={removeSelectedItem} />
+    //   </div>
+    //   <div className='col-span-2 border-s border-primary/10 flex flex-col justify-start items-center '>
+    //     <CardContainer
+    //       items={data.slice(3, 6).map(item => ({ id: item.id, content: item.name }))}
+    //       selectedItem={selectedItem}
+    //       onSelectionChange={updateSelection}
+    //     />
+    //   </div>
+    // </div>
+     <div className="relative flex-1 grid grid-cols-12  h-full w-full">
+      <div className='col-span-4 bg-secondary h-[858px] border border-accent/20 rounded-e-xl'></div>
+      <div className='col-span-8 '>
+      <div className='px-4'>
         <CardContainer
-          items={data.slice(0, 3).map(item => ({ id: item.id, content: item.name }))}
+          items={data.slice(0, 6).map(item => ({ id: item.id, content: item.name }))}
           selectedItem={selectedItem}
           onSelectionChange={updateSelection}
         />
       </div>
-      <div className='col-span-8  '>
         <ChatPage isSelected={isSelectedData} removeSelectedItem={removeSelectedItem} />
       </div>
-      <div className='col-span-2 border-s border-primary/10 flex flex-col justify-start items-center '>
-        <CardContainer
-          items={data.slice(3, 6).map(item => ({ id: item.id, content: item.name }))}
-          selectedItem={selectedItem}
-          onSelectionChange={updateSelection}
-        />
-      </div>
+      
     </div>
   )
 }

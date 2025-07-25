@@ -17,7 +17,7 @@ interface ChatInputProps {
     clearActivePdf?: () => void
 }
 
-function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSendMessage, loading, activePdfId, activePdfName, clearActivePdf }: ChatInputProps) {
+function ChatInput({ setResults, isSelected, removeSelectedItem, onSendMessage, loading, activePdfId, activePdfName, clearActivePdf }: ChatInputProps) {
     const boxRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState('');
@@ -120,17 +120,12 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
 
             <div
                 ref={boxRef}
-                className={` z-2 
-                    
-                    ${results
-                        ? `bg-gradient-to-tl from-danger/20 to-black backdrop-blur-xl -mt-36 mx-1`
-                        : 'bg-secondary   '}
-                         border border-primary/20 text-white flex flex-col justify-start items-center  rounded-2xl min-h-35 overflow-hidden shadow-2xl shadow-background/40 transition-all duration-200 ease-in `}
+                className={`z-2  text-white bg-secondary border-t border-accent/20 pt-5 flex flex-col justify-start items-center  rounded-b-2xl pb-4 overflow-hidden shadow-2xl shadow-background/40 `}
             >
-                <div className='w-full h-10 flex items-center justify-between p-2 '>
-                    <div className='bg-background px-2 flex justify-center items-center gap-1 rounded-2xl rounded-bl-none py-0.5 border border-primary/20 shadow shadow-black'>
+                <div className='w-full flex items-center justify-between px-5 '>
+                    <div className='bg-background/50 px-2 flex justify-center items-center gap-1 rounded-2xl  py-0.5 border border-accent/20 shadow shadow-black'>
                         <LuSparkles size={13} className='text-accent' />
-                        <h5 className='text-primary/70 pe-3'>
+                        <h5 className='text-accent/70 '>
                             Chat <span className='font-bold'>IA</span>
                         </h5>
                     </div>
@@ -205,9 +200,10 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className='w-full h-20 grid grid-cols-12 '>
+                <div className='px-5 py-2 bg'>
+                <form onSubmit={handleSubmit} className='w-full h-10 px-5 grid grid-cols-12 bg-accent/20 rounded-lg '>
                     {/* Botón para subir archivos */}
-                    <div className='w-full h-full flex justify-center items-center'>
+                    <div className='w-full h-full flex justify-center items-center '>
                         <input
                             ref={fileInputRef}
                             type='file'
@@ -231,7 +227,7 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                     </div>
 
                     {
-                        isSelected?.id === 4 || isSelected?.id === 5 || isSelected?.id === 0
+                        isSelected?.id === 4 || isSelected?.id === 5 || isSelected?.id === 0 || isSelected?.id === 1 || isSelected?.id === 2 || isSelected?.id === 3
                             ?
                             <input
                                 type="text"
@@ -251,9 +247,9 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyPress={handleKeyPress}
-                                placeholder={isListening ? '🎤 Escuchando...' : 'Actualmente solo disponible STACK & Documentos'}
-                                className={`px-10 w-[95%] h-full col-span-10  outline-none text-white p-2 text-sm bg-danger/30 rounded-2xl transition-all duration-200 ${isListening
-                                    ? 'animate-pulse border-l-2 border-red-400 bg-red-500/5'
+                                placeholder={isListening ? '🎤 Escuchando...' : 'Selecciona una opción'}
+                                className={`px-10 w-[95%] h-full col-span-10  outline-none text-white p-2 text-sm bg-accent/90  transition-all duration-200 ${isListening
+                                    ? 'animate-pulse border-l-2 border-accent bg-red-500/5'
                                     : 'focus:bg-white/5'
                                     } cursor-not-allowed`}
                                 disabled={true}
@@ -289,6 +285,7 @@ function ChatInput({ setResults, results, isSelected, removeSelectedItem, onSend
                     )}
 
                 </form>
+                </div>
             </div>
         </>
     )

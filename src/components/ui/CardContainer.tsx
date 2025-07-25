@@ -40,7 +40,7 @@ function CardContainer({ items, onSelectionChange, selectedItem: externalSelecte
   };
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center">
+    <div className="flex  gap-1 justify-center">
       {items.map(item => (
         <Card
           key={item.id}

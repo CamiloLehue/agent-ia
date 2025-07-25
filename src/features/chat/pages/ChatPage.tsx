@@ -13,9 +13,9 @@ function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
     const { messages, loading, error, sendMessage, isConnected, activePdfId, activePdfName, clearActivePdf } = useChat()
 
     return (
-        <div className="h-full w-full flex flex-col overflow-hidden p-4">
-            <div className={`${results ? 'flex-1' : 'flex-none'} overflow-hidden transition-all duration-500`}>
-                <ChatResults
+        <div className="p-5 w-full flex flex-col  gap-2">
+            <div className="h-auto w-full flex flex-col overflow-hidden bg-secondary border border-accent/20 rounded-2xl">
+            <ChatResults
                     setResults={setResults}
                     results={results}
                     messages={messages}
@@ -23,10 +23,7 @@ function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
                     error={error}
                     isConnected={isConnected}
                 />
-            </div>
-            {!results && <div className="flex-1"></div>}
-            <div className="flex-shrink-0">
-                <ChatInput
+            <ChatInput
                     isSelected={isSelected}
                     setResults={setResults}
                     results={results}
@@ -37,8 +34,10 @@ function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
                     activePdfName={activePdfName}
                     clearActivePdf={clearActivePdf}
                 />
+        </div>
+            <div className="bg-secondary border border-accent/20 w-full h-35 rounded-2xl">
+
             </div>
-            {!results && <div className="flex-1"></div>}
         </div>
     )
 }

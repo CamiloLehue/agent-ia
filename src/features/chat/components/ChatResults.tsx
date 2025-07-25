@@ -14,7 +14,7 @@ interface ChatResultsProps {
     isConnected?: boolean
 }
 
-function ChatResults({ setResults, results, messages, loading, error, isConnected = true }: ChatResultsProps) {
+function ChatResults({ setResults, messages, loading, error, isConnected = true }: ChatResultsProps) {
     const boxRef = useRef<HTMLDivElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { isSpeaking, speak, stopSpeaking, speechSupported } = useVoice();
@@ -62,14 +62,8 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
     return (
         <div
             ref={boxRef}
-            className={`w-full transition-all duration-500 ease-in-out ${
-                results
-                    ? "h-full bg-secondary border border-primary/20 shadow-2xl rounded-2xl p-5 flex flex-col opacity-100"
-                    : "h-auto bg-transparent border-transparent shadow-none opacity-0 pointer-events-none"
-            }`}>
-            {results && (
-                <>
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/20 flex-shrink-0">
+            className={`w-full transition-all duration-500 ease-in-out h-[490px]  shadow-2xl rounded-t-2xl p-5 flex flex-col opacity-100`}>
+            <div className="flex items-center justify-between mb-4 pb-2 border-b border-primary/20 flex-shrink-0">
                         <div className="flex items-center gap-2">
                             <LuSparkles className="text-accent" size={16} />
                             <small className="text-primary/70 font-medium">Conversación</small>
@@ -89,7 +83,7 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
                                 <LuBot size={32} className="mx-auto mb-2 opacity-50" />
                                 <p>¡Hola! Soy tu asistente IA. ¿En qué puedo ayudarte hoy?</p>
                                 <p className="text-xs mt-2 opacity-70">
-                                    Puedes seleccionar elementos de los paneles laterales para incluirlos en tu consulta.
+                                    Puedes seleccionar elementos de los botones Superiores para incluirlos en tu consulta.
                                 </p>
                             </div>
                         )}
@@ -175,8 +169,6 @@ function ChatResults({ setResults, results, messages, loading, error, isConnecte
 
                         <div ref={messagesEndRef} />
                     </div>
-                </>
-            )}
         </div>
     )
 }
