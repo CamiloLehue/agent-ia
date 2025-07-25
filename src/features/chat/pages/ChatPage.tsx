@@ -1,49 +1,52 @@
-import { useState } from "react"
-import ChatInput from "../components/ChatInput"
-import ChatResults from "../components/ChatResults"
-import { useChat } from "../hooks/useChat"
+import { useState } from "react";
+import ChatInput from "../components/ChatInput";
+import ChatResults from "../components/ChatResults";
+import { useChat } from "../hooks/useChat";
 
 interface ChatPageProps {
-    isSelected?: { id: number, name: string }
-    removeSelectedItem: () => void
+  isSelected?: { id: number; name: string };
+  removeSelectedItem: () => void;
 }
 
 function ChatPage({ isSelected, removeSelectedItem }: ChatPageProps) {
-    const [results, setResults] = useState<boolean>(false)
-    const { messages, loading, error, sendMessage, isConnected, activePdfId, activePdfName, clearActivePdf } = useChat()
+  const [results, setResults] = useState<boolean>(false);
+  const {
+    messages,
+    loading,
+    error,
+    sendMessage,
+    isConnected,
+    activePdfId,
+    activePdfName,
+    clearActivePdf,
+  } = useChat();
 
-    return (
-        <div className="h-full w-full flex flex-col overflow-hidden p-4">
-            <div className={`${results ? 'flex-1' : 'flex-none'} overflow-hidden transition-all duration-500`}>
-                <ChatResults
-                    setResults={setResults}
-                    results={results}
-                    messages={messages}
-                    loading={loading}
-                    error={error}
-                    isConnected={isConnected}
-                />
-            </div>
-            {!results && <div className="flex-1"></div>}
-            <div className="flex-shrink-0">
-                <ChatInput
-                    isSelected={isSelected}
-                    setResults={setResults}
-                    results={results}
-                    removeSelectedItem={removeSelectedItem}
-                    onSendMessage={sendMessage}
-                    loading={loading}
-                    activePdfId={activePdfId}
-                    activePdfName={activePdfName}
-                    clearActivePdf={clearActivePdf}
-                />
-            </div>
-            {!results && <div className="flex-1"></div>}
-        </div>
-    )
+  return (
+    <div className="p-5 w-full flex flex-col  gap-2">
+      <div className="h-auto w-full flex flex-col overflow-hidden bg-secondary border border-accent/20 rounded-2xl">
+        <ChatResults
+          setResults={setResults}
+          results={results}
+          messages={messages}
+          loading={loading}
+          error={error}
+          isConnected={isConnected}
+        />
+        <ChatInput
+          isSelected={isSelected}
+          setResults={setResults}
+          results={results}
+          removeSelectedItem={removeSelectedItem}
+          onSendMessage={sendMessage}
+          loading={loading}
+          activePdfId={activePdfId}
+          activePdfName={activePdfName}
+          clearActivePdf={clearActivePdf}
+        />
+      </div>
+      <div className="bg-secondary border border-accent/20 w-full h-35 rounded-2xl"></div>
+    </div>
+  );
 }
 
-export default ChatPage
-
-
-
+export default ChatPage;
